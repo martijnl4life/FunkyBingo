@@ -7,12 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin 
 {
 	private final int size = 5;
+	private AdvancementManager manager;
+	private BingoCard card;
 	
     @Override
     public void onEnable() 
     {
-    	AdvancementManager manager = new AdvancementManager(this);
-    	BingoCard card = new BingoCard(manager.getSelection(0, size), manager.getRoot(), manager.getUninitialised(), size);
+    	manager = new AdvancementManager(this);
+    	card = new BingoCard(manager.getSelection(0, size), manager.getRoot(), manager.getUninitialised(), size);
     }
     
     @Override
