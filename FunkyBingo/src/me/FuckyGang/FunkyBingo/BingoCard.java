@@ -8,21 +8,21 @@ public class BingoCard
 {
 	private Advancement[] advancements;
 	private Advancement root;
-	private Advancement uninitialized;
+	private Advancement uninitialised;
 	private int size;
+	private boolean created;
 	
-	public BingoCard(Advancement[] advancements, Advancement root, Advancement uninitialized, int size)
+	public BingoCard(Advancement root, Advancement uninitialised)
 	{
-		this.advancements = advancements;
 		this.root = root;
-		this.uninitialized = uninitialized;
-		this.size = size;
-		
-		createCard();
+		this.uninitialised = uninitialised;
+		this.created = false;
 	}
 	
-	private void createCard()
+	public void createCard(Advancement[] advancements, int size)
 	{
+		this.advancements = advancements;
+		this.size = size;
 		NamespacedKey parent;
 		for (int i = 1; i <= this.size; i++)
 		{
@@ -40,14 +40,21 @@ public class BingoCard
 				addAdvancementToCard(this.advancements[i*j], parent);
 			}
 		}
+		this.created = true;
 	}
 	
 	public void resetCard()
 	{
 		for (Advancement advancement : this.advancements)
 		{
-			advancement.makeChild(this.uninitialized.getId());
+			advancement.makeChild(this.uninitialised.getId());
 		}
+		this.created = false;
+	}
+	
+	public boolean isCreated()
+	{
+		return created;
 	}
 
 	private void addAdvancementToCard(Advancement advancement, NamespacedKey parent) 
