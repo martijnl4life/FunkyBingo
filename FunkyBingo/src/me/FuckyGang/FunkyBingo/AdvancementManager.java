@@ -92,13 +92,32 @@ public class AdvancementManager {
 				adv.add(p.getAdvancement());
 			}
 		}
-		
 		return adv;
 	}
 	
 	private void initAdvancements()
-	{
-		addAdvancement(1,factory.getItem("newbie/wood", unInitialised, "Chopper", "Chop down a tree", Material.OAK_LOG));
+	{	
+		//addAdvancement(int Difficulty,factory.getItem(String Id, NamedspacedKey parent, String title, String desc , Material icon));
+		addAdvancement(0,factory.getItem("bingo/diamondblock", unInitialised, "9 Diamonds Pogu", "Obtain 1 Diamond Block", Material.DIAMOND_BLOCK));
+		addAdvancement(0,factory.getItem("bingo/bookshelf", unInitialised, "Booked!", "Obtain 1 Bookshelf", Material.BOOKSHELF));
+		addAdvancement(0,factory.getItem("bingo/enchantmenttable", unInitialised, "Time for some magic :O", "Obtain 1 Entchanting Table", Material.ENCHANTING_TABLE));
+		addAdvancement(0,factory.getItem("bingo/endcrystal", unInitialised, "A teary eye", "Obtain 1 End Crystal", Material.END_CRYSTAL));
+		addAdvancement(0,factory.getItem("bingo/emeraldblock", unInitialised, "For the Villagers :)", "Obtain 1 Emerald Block", Material.EMERALD_BLOCK));
+		addAdvancement(0,factory.getItem("bingo/brick", unInitialised, "Just Like Legos", "Obtain 5 Bricks", Material.BRICK, 5));
+		addAdvancement(0,factory.getItem("bingo/glisteringmelonslice", unInitialised, "Watermelone", "Obtain 1 Glistering Melon Slice", Material.GLISTERING_MELON_SLICE));
+		addAdvancement(0,factory.getItem("bingo/seapickle", unInitialised, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles", Material.SEA_PICKLE, 32));
+		addAdvancement(0,factory.getItem("bingo/cookie", unInitialised, "Just get 1 Cookie :)", "Obtain 1 Cookie", Material.COOKIE));
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
