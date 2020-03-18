@@ -1,0 +1,7 @@
+main: me.FuckyGang.FunkyBingo.Main
+name: FuckyBingo
+version: 1.0
+author: Fuckygang
+
+commands:
+  Hello:
