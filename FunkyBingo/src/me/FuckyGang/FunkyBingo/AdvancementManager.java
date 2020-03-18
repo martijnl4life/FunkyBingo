@@ -19,10 +19,29 @@ public class AdvancementManager {
 	public AdvancementManager(Plugin plugin)
 	{
 		this.factory = new AdvancementFactory(plugin, true, false);
-		this.root = factory.getRoot("newbie/root", "Getting Started", "Newbie Advancements", Material.PLAYER_HEAD, "block/dirt");
+		this.root = factory.getRoot("bingo/root", "Getting Started", "Newbie Advancements", Material.PLAYER_HEAD, "block/dirt");
 		this.unInitialised = factory.getImpossible("voided", root, "Not Initialised", "Root of advancements not in use", Material.BEDROCK);
 		
 		this.advancements = new ArrayList<Pair>();
+	}
+	
+	
+	public Advancement[] getSelection(int difficulty, int size)
+	{
+		Advancement[] selection = new Advancement[size*size]; 
+		
+		
+		return selection;
+	}
+	
+	public Advancement getRoot()
+	{
+		return root;
+	}
+	
+	public Advancement getUninitialised()
+	{
+		return unInitialised;
 	}
 	
 	private void addAdvancement(int difficulty, Advancement a)
@@ -35,13 +54,19 @@ public class AdvancementManager {
 		addAdvancement(1,factory.getItem("newbie/wood", unInitialised, "Chopper", "Chop down a tree", Material.OAK_LOG));
 	}
 	
-	public Advancement[] getSelection(int difficulty, int size)
+	private ArrayList<Advancement> getAdvancementsDifficulty(int difficulty)
 	{
-		Advancement[] selection = new Advancement[25];
+		ArrayList<Advancement> adv = new ArrayList<Advancement>();
 		
+		for (Pair p : advancements)
+		{
+			if (p.getDifficulty() == difficulty)
+			{
+				adv.add(p.getAdvancement());
+			}
+		}
 		
-		
-		return selection;
+		return adv;
 	}
 	
 	private class Pair
