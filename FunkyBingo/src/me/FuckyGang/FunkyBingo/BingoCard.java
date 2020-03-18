@@ -5,40 +5,39 @@ import hu.trigary.advancementcreator.Advancement;
 public class BingoCard 
 {
 	private Advancement[] advancements;
+	private Advancement root;
 	private int size;
 	
-	public BingoCard(Advancement[] advancements, int size)
+	public BingoCard(Advancement[] advancements, Advancement root, int size)
 	{
-		this.size = size;
 		this.advancements = advancements;
+		this.root = root;
+		this.size = size;
 		
 		createCard();
 	}
 	
 	private void createCard()
 	{
-		if (this.advancements.length != this.size * this.size)
+		Advancement parent;
+		for (int i = 1; i <= this.size; i++)
 		{
-			System.out.println("not enough advancements in list");
-		}
-		else
-		{
-			int x = 0;
-			int y = 0;
-			for (int i = 1; i <= this.size; i++)
+			for (int j = 1; j <= this.size; j++)
 			{
-				for (int j = 1; j <= this.size; j++)
+				if (j == 0)
 				{
-					addAdvancementToCard(this.advancements[i*j], x, y);
-					x += 500;
-					
+					parent = this.root;
 				}
-				y += 500;
+				else
+				{
+					parent = this.advancements[i * j - 1];
+				}
+				addAdvancementToCard(this.advancements[i*j], parent);
 			}
 		}
 	}
 
-	private void addAdvancementToCard(Advancement advancement, int x, int y) 
+	private void addAdvancementToCard(Advancement advancement, Advancement parent) 
 	{
 		
 	}
