@@ -12,7 +12,7 @@ public class Main extends JavaPlugin
     public void onEnable() 
     {
     	AdvancementManager manager = new AdvancementManager(this);
-    	BingoCard card = new BingoCard(manager.getSelection(0, size), manager.getRoot(), size);
+    	BingoCard card = new BingoCard(manager.getSelection(0, size), manager.getRoot(), manager.getUninitialised(), size);
     }
     
     @Override
