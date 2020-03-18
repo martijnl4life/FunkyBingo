@@ -9,7 +9,7 @@ public class Main extends JavaPlugin
     @Override
     public void onEnable() 
     {
-        
+    	AdvancementManager manager = new AdvancementManager(this);
     }
     
     @Override
