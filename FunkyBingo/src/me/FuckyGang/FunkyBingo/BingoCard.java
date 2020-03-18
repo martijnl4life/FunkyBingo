@@ -1,5 +1,6 @@
 package me.FuckyGang.FunkyBingo;
 
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
 import hu.trigary.advancementcreator.Advancement;
@@ -41,6 +42,7 @@ public class BingoCard
 			}
 		}
 		this.created = true;
+		Bukkit.reloadData();
 	}
 	
 	public void resetCard()
@@ -50,6 +52,7 @@ public class BingoCard
 			advancement.makeChild(this.uninitialised.getId());
 		}
 		this.created = false;
+		Bukkit.reloadData();
 	}
 	
 	public boolean isCreated()
