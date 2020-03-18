@@ -24,7 +24,7 @@ public class Main extends JavaPlugin
         
         if (label.equals("hello"))
         {
-            sender.sendMessage("Hey bitches :)");
+            sender.sendMessage("Hey bitch :)");
             return true;
         }
         
