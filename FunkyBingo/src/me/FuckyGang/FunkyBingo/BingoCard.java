@@ -66,4 +66,12 @@ public class BingoCard
 	{
 		return created;
 	}
+	
+	public void logCard()
+	{
+		for (Advancement a : this.advancements)
+		{
+			Bukkit.getLogger().log(Level.INFO, a.getId() + "," + a.getParent());
+		}
+	}
 }
