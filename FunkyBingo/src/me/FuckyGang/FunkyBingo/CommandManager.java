@@ -56,6 +56,7 @@ public class CommandManager
 							else 
 							{
 								card.createCard(manager.getSelection(diff, s), s);
+								sender.sendMessage(ChatColor.GOLD + "" + "Bingo Card Created!");
 								return true;
 							}
 						}

@@ -1,5 +1,7 @@
 package me.FuckyGang.FunkyBingo;
 
+import java.util.logging.Level;
+
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
@@ -17,7 +19,6 @@ public class BingoCard
 	{
 		this.root = root;
 		this.uninitialised = uninitialised;
-		this.uninitialised.setHidden(true);
 		this.created = false;
 	}
 	
@@ -39,11 +40,12 @@ public class BingoCard
 					parent = this.advancements[y * this.size + x - 1].getId();
 				}
 				
-				addAdvancementToCard(this.advancements[y * this.size + x], parent);
+				this.advancements[y * this.size + x].makeChild(parent);
 			}
 		}
 		this.created = true;
 		Bukkit.reloadData();
+		Bukkit.getLogger().log(Level.INFO, Integer.toString(size));
 	}
 	
 	public void resetCard()
@@ -63,10 +65,5 @@ public class BingoCard
 	public boolean isCreated()
 	{
 		return created;
-	}
-
-	private void addAdvancementToCard(Advancement advancement, NamespacedKey parent) 
-	{
-		advancement.makeChild(parent);
 	}
 }
