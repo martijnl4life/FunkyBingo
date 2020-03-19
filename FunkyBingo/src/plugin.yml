@@ -6,5 +6,4 @@ author: Fuckygang
 
 
 commands:
-  create:
-  reset:
+  bc:

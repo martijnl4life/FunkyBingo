@@ -38,7 +38,7 @@ public class AdvancementManager {
 	
 	public AdvancementManager(Plugin plugin)
 	{
-		this.factory = new AdvancementFactory(plugin, true, false);
+		this.factory = new AdvancementFactory(plugin, false, false);
 		this.root = factory.getRoot("bingo/root", "Getting Started", "Newbie Advancements", Material.DIRT, "block/dirt");
 		this.unInitialised = factory.getImpossible("voided", root, "Not Initialised", "Root of advancements not in use", Material.BEDROCK);
 		

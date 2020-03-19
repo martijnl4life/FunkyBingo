@@ -17,6 +17,7 @@ public class BingoCard
 	{
 		this.root = root;
 		this.uninitialised = uninitialised;
+		this.uninitialised.setHidden(true);
 		this.created = false;
 	}
 	
@@ -50,6 +51,7 @@ public class BingoCard
 		for (Advancement advancement : this.advancements)
 		{
 			advancement.makeChild(this.uninitialised.getId());
+			advancement.setHidden(true);
 		}
 		this.created = false;
 		Bukkit.reloadData();
