@@ -26,20 +26,20 @@ public class BingoCard
 		this.advancements = advancements;
 		this.size = size;
 		NamespacedKey parent;
-		for (int i = 1; i <= this.size; i++)
+		for (int x = 0; x < this.size; x++)
 		{
-			for (int j = 1; j <= this.size; j++)
+			for (int y = 0; y < this.size; y++)
 			{
-				if (j == 0)
+				if (x == 0)
 				{
 					parent = this.root.getId();
 				}
 				else
 				{
-					parent = this.advancements[i * j - 1].getId();
+					parent = this.advancements[y * this.size + x - 1].getId();
 				}
 				
-				addAdvancementToCard(this.advancements[i*j], parent);
+				addAdvancementToCard(this.advancements[y * this.size + x], parent);
 			}
 		}
 		this.created = true;
@@ -48,13 +48,16 @@ public class BingoCard
 	
 	public void resetCard()
 	{
-		for (Advancement advancement : this.advancements)
+		if (isCreated())
 		{
-			advancement.makeChild(this.uninitialised.getId());
-			advancement.setHidden(true);
+			for (Advancement advancement : this.advancements)
+			{
+				advancement.makeChild(this.uninitialised.getId());
+				advancement.setHidden(true);
+			}
+			this.created = false;
+			Bukkit.reloadData();
 		}
-		this.created = false;
-		Bukkit.reloadData();
 	}
 	
 	public boolean isCreated()
