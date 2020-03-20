@@ -1,11 +1,8 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
-import hu.trigary.advancementcreator.AdvancementFactory;
-import hu.trigary.advancementcreator.Advancement;
 
 public class AdvancementManager {
 	
@@ -14,15 +11,22 @@ public class AdvancementManager {
 	
 	public AdvancementManager(Plugin plugin)
 	{
-		templates = new ArrayList<AdvancementTemplate>();
+		this.templates = new ArrayList<AdvancementTemplate>();
+		this.card = new BingoCard(plugin);
 	}
 	
-	public void addAdvancementsGetItem(String id, String title, String description, Material icon, int amount)
+	public void init()
 	{
-		templates.add(new AdvancementTemplate(id,title,description,icon,amount));
+		fillAdvancements();
+		card.GenerateCard(templates);
 	}
 	
-	public void fillAdvancements()
+	private void addAdvancementsGetItem(String id, String title, String description, Material icon, int amount)
+	{
+		this.templates.add(new AdvancementTemplate(id,title,description,icon,amount));
+	}
+	
+	private void fillAdvancements()
 	{
 		addAdvancementsGetItem("bingo/diamondblock","9 Diamonds Pogu","Obtain 1 Diamond Block",Material.DIAMOND_BLOCK,1 );
 		addAdvancementsGetItem("bingo/bookshelf","Booked!","Obtain 1 Diamond Block",Material.BOOKSHELF,1);
@@ -34,6 +38,7 @@ public class AdvancementManager {
 		addAdvancementsGetItem("bingo/seapickle","I'M PICKLE RICK!!!","Obtain 1 Diamond Block",Material.SEA_PICKLE,32);
 		addAdvancementsGetItem("bingo/cookie","Just get 1 Cookie :)","Obtain 1 Cookie",Material.COOKIE,1);
 	}
+	
 
 //		addAdvancement(0,factory.getItem("bingo/diamondblock", unInitialised, "9 Diamonds Pogu", "Obtain 1 Diamond Block", Material.DIAMOND_BLOCK));
 //        addAdvancement(0,factory.getItem("bingo/bookshelf", unInitialised, "Booked!", "Obtain 1 Bookshelf", Material.BOOKSHELF));

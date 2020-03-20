@@ -7,12 +7,11 @@ import org.bukkit.command.CommandSender;
 public class CommandManager 
 {
 	private AdvancementManager manager;
-	private BingoCard card;
 	
 	public CommandManager(AdvancementManager manager)
 	{
 		this.manager = manager;
-    	this.card = new BingoCard(manager.getRoot(), manager.getUninitialised());
+		this.manager.init();
 	}
 	
 	public boolean command(CommandSender sender, Command cmd, String label, String[] args)
@@ -30,7 +29,6 @@ public class CommandManager
 				// /bc reset  --> resets the bingo card
 				if (args[0].equalsIgnoreCase("reset"))
 				{
-					card.resetCard();
 					sender.sendMessage(ChatColor.GOLD + "" + "Bingo Card Reset!");
 					return true;
 				}
@@ -49,16 +47,7 @@ public class CommandManager
 						int s = Integer.parseInt(args[2]);
 						if (diff >= 0 && diff <= 2 && s > 0 && s <= 3)
 						{
-							if (card.isCreated())
-							{
-								sender.sendMessage(ChatColor.YELLOW + "" + "[FAILED]: there is already a card present");
-							}
-							else 
-							{
-								card.createCard(manager.getSelection(diff, s), s);
-								sender.sendMessage(ChatColor.GOLD + "" + "Bingo Card Created!");
-								return true;
-							}
+
 						}
 					} 
 				}
@@ -70,7 +59,6 @@ public class CommandManager
 		{
 			if(args.length == 0)
 			{
-				card.logCard();
 				return true;
 			}
 			sender.sendMessage(ChatColor.RED + "" + "[FAILED]: wrong argument specified");
