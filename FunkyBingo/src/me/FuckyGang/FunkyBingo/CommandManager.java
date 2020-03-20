@@ -7,11 +7,11 @@ import org.bukkit.command.CommandSender;
 
 public class CommandManager
 {
-	private Manager manager;
+	private ManagerInterface manager;
 	
-	public CommandManager()
+	public CommandManager(ManagerInterface m)
 	{
-		this.manager = new Manager();
+		this.manager = m;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)

@@ -16,7 +16,7 @@ import eu.endercentral.crazy_advancements.CrazyAdvancements;
 import eu.endercentral.crazy_advancements.NameKey;
 import eu.endercentral.crazy_advancements.manager.AdvancementManager;
 
-public class Manager 
+public class Manager implements ManagerInterface
 {
 	private AdvancementManager advManager;
 	private ArrayList<BingoTile> bingotiles;
@@ -34,11 +34,13 @@ public class Manager
 		this.root = new Advancement(null, new NameKey("bingo", "root"), rootDisplay);
 	}
 	
+	@Override
 	public void update(Player player)
 	{
 		advManager.addPlayer(player);
 	}
 	
+	@Override
 	public boolean createCard(int difficulty, int size)
 	{
 		resetCard();
@@ -76,6 +78,31 @@ public class Manager
 		return true;
 	}
 	
+
+	@Override
+	public void resetCard()
+	{
+		if (!advancements.isEmpty())
+		{
+			for (Advancement adv : advancements)
+			{
+				advManager.removeAdvancement(adv);
+			}
+			advancements.clear();
+		}
+	}
+	
+	@Override
+	public AdvancementManager getManager() {
+		return advManager;
+	}
+	
+	private void addAdvancement(BingoTile tile, Advancement parent, double x, double y)
+	{
+		advancements.add(new Advancement(parent, tile.getId(), new AdvancementDisplay(tile.getIcon(), tile.getTitle(), tile.getDescription(), AdvancementFrame.TASK, true, true, AdvancementVisibility.ALWAYS)));
+		advancements.get(advancements.size() - 1).getDisplay().setCoordinates((float)x, (float)y);
+	}
+	
 	private BingoTile[] getSelection(int difficulty, int size)
 	{
 		BingoTile[] result = new BingoTile[size * size];
@@ -109,25 +136,6 @@ public class Manager
 		}
 		return tiles;
 	}
-	
-	public void resetCard()
-	{
-		if (!advancements.isEmpty())
-		{
-			for (Advancement adv : advancements)
-			{
-				advManager.removeAdvancement(adv);
-			}
-			advancements.clear();
-		}
-	}
-	
-	private void addAdvancement(BingoTile tile, Advancement parent, double x, double y)
-	{
-		advancements.add(new Advancement(parent, tile.getId(), new AdvancementDisplay(tile.getIcon(), tile.getTitle(), tile.getDescription(), AdvancementFrame.TASK, false, true, AdvancementVisibility.ALWAYS)));
-		advancements.get(advancements.size() - 1).getDisplay().setCoordinates((float)x, (float)y);
-	}
-	
 	private void initAdvancements()
 	{
 		addBingoTile(0, "bingo", "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
@@ -145,5 +153,7 @@ public class Manager
 	{
 		bingotiles.add(new BingoTile(0, new NameKey(namespace, key), icon, title, description));
 	}
+
+
 	
 }
