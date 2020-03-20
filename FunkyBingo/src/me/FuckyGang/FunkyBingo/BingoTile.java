@@ -39,6 +39,16 @@ public class BingoTile
 		return this.advancement;
 	}
 	
+	public void removeAdvancement()
+	{
+		this.advancement = null;
+	}
+	
+	public Advancement getAdvancement()
+	{
+		return advancement;
+	}
+	
 	public int getDifficluty()
 	{
 		return this.difficulty;

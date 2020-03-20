@@ -20,7 +20,6 @@ public class Manager implements ManagerInterface
 {
 	private AdvancementManager advManager;
 	private ArrayList<BingoTile> bingotiles;
-	private ArrayList<Advancement> advancements;
 	
 	private Advancement root;
 	
@@ -28,7 +27,6 @@ public class Manager implements ManagerInterface
 	{
 		this.advManager = CrazyAdvancements.getNewAdvancementManager();
 		this.bingotiles = new ArrayList<BingoTile>();
-		this.advancements = new ArrayList<Advancement>();
 		initAdvancements();
 		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, "Bingo", "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/gray_concrete", false, false, AdvancementVisibility.ALWAYS);
 		this.root = new Advancement(null, new NameKey("bingo", "root"), rootDisplay);
@@ -56,24 +54,26 @@ public class Manager implements ManagerInterface
 			return false;
 		}
 		
+		Advancement prevAdv = null;
+		
 		for (int y = 0; y < size; y++)
 		{
 			for (int x = 0; x < size; x++)
 			{
 				if (x == 0)
 				{
-					addAdvancement(tiles[y * size + x], root, x,y);
+					prevAdv = tiles[y*size + x].makeAdvancement(root, x, y);
 				}
 				else
 				{
-					addAdvancement(tiles[y * size + x], advancements.get(advancements.size() - 1),x,y);
+					prevAdv = tiles[y * size + x].makeAdvancement(prevAdv, x, y);
 				}
 				
 			}
 		}
-		for (Advancement adv : advancements)
+		for (BingoTile tile : tiles)
 		{
-			advManager.addAdvancement(adv);
+			advManager.addAdvancement(tile.getAdvancement());
 		}
 		return true;
 	}
@@ -82,13 +82,13 @@ public class Manager implements ManagerInterface
 	@Override
 	public void resetCard()
 	{
-		if (!advancements.isEmpty())
+		if (!bingotiles.isEmpty())
 		{
-			for (Advancement adv : advancements)
+			for (BingoTile tile : bingotiles)
 			{
-				advManager.removeAdvancement(adv);
+				advManager.removeAdvancement(tile.getAdvancement());
+				tile.removeAdvancement();
 			}
-			advancements.clear();
 		}
 	}
 	
@@ -97,11 +97,6 @@ public class Manager implements ManagerInterface
 		return advManager;
 	}
 	
-	private void addAdvancement(BingoTile tile, Advancement parent, double x, double y)
-	{
-		advancements.add(new Advancement(parent, tile.getId(), new AdvancementDisplay(tile.getIcon(), tile.getTitle(), tile.getDescription(), AdvancementFrame.TASK, true, true, AdvancementVisibility.ALWAYS)));
-		advancements.get(advancements.size() - 1).getDisplay().setCoordinates((float)x, (float)y);
-	}
 	
 	private BingoTile[] getSelection(int difficulty, int size)
 	{
@@ -136,6 +131,7 @@ public class Manager implements ManagerInterface
 		}
 		return tiles;
 	}
+	
 	private void initAdvancements()
 	{
 		addBingoTile(0, "bingo", "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
