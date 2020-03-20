@@ -1,13 +1,12 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
-
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import eu.endercentral.crazy_advancements.Advancement;
+import eu.endercentral.crazy_advancements.NameKey;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import eu.endercentral.crazy_advancements.events.*;
 
 public class EventManager implements Listener
 {
@@ -19,8 +18,23 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
-	public void onInventoryPickupItem(InventoryPickupItemEvent event)
+	public void onEntityPickupItemEvent(EntityPickupItemEvent event)
 	{
-		
+		if (event.getItem().getItemStack().getType() == Material.DIAMOND_BLOCK)
+		{
+			if (event.getEntity() instanceof Player)
+			{
+				advance((Player)event.getEntity(), manager.getManager().getAdvancement(new NameKey("bingo", "diamondblock4")));
+			}
+		}
+	}
+	
+	public void advance(Player player, Advancement advancement)
+	{
+		int progress = manager.getManager().getCriteriaProgress(player, advancement);
+		if (progress < advancement.getCriteria())
+		{
+			manager.getManager().setCriteriaProgress(player, advancement, progress + 1);
+		}
 	}
 }
