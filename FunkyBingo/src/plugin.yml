@@ -3,5 +3,7 @@ name: FuckyBingo
 version: 1.0
 api-version: 1.15
 author: Fuckygang
+depend: [CrazyAdvancementsAPI]
 
 commands:
+  bc:

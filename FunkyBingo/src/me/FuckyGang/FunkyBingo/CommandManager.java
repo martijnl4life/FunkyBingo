@@ -1,5 +1,6 @@
 package me.FuckyGang.FunkyBingo;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,6 +43,11 @@ public class CommandManager
 					}
 				case "reset":
 					break;
+				case "update":
+					{
+						manager.update(Bukkit.getPlayer(sender.getName()));
+						break;
+					}
 				default:
 					sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: not enough parameters");
 					return false;
