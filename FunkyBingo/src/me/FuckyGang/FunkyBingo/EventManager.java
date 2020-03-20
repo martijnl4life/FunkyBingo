@@ -1,6 +1,7 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 
 import java.util.logging.Level;
 
@@ -18,44 +19,8 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
-	public void onAdvancementGrantEvent(AdvancementGrantEvent event)
+	public void onInventoryPickupItem(InventoryPickupItemEvent event)
 	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onAdvancementRevokeEvent(AdvancementRevokeEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onAdvancementScreenCloseEvent(AdvancementScreenCloseEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onAdvancementTabChangeEvent(AdvancementTabChangeEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onCriteriaGrantEvent(CriteriaGrantEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onCriteriaProgressChangeEvent(CriteriaProgressChangeEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
-	}
-	
-	@EventHandler
-	public void onCriteriaRevokeEvent(CriteriaRevokeEvent event)
-	{
-		Bukkit.getLogger().log(Level.INFO, event.getEventName());
+		
 	}
 }
