@@ -6,6 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin 
 {
+	private Manager manager;
+	
     @Override
     public void onEnable() 
     {
@@ -20,14 +22,7 @@ public class Main extends JavaPlugin
     
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        //hello
-        
-        if (label.equals("hello"))
-        {
-            sender.sendMessage("Hey bitches :)");
-            return true;
-        }
-        
+
         return false;
     }
 }
