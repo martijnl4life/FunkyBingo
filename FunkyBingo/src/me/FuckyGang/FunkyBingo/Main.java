@@ -6,12 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin 
 {
-	private Manager manager;
+	private CommandManager cmdManager;
 	
     @Override
     public void onEnable() 
     {
-        
+        this.cmdManager = new CommandManager();
     }
     
     @Override
@@ -22,7 +22,6 @@ public class Main extends JavaPlugin
     
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-
-        return false;
+    	return cmdManager.onCommand(sender, cmd, label, args);
     }
 }
