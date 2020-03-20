@@ -30,7 +30,7 @@ public class Manager
 		this.bingotiles = new ArrayList<BingoTile>();
 		this.advancements = new ArrayList<Advancement>();
 		initAdvancements();
-		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, "root", "boat", AdvancementFrame.TASK, false, false, AdvancementVisibility.ALWAYS);
+		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, "Bingo", "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/gray_concrete", false, false, AdvancementVisibility.ALWAYS);
 		this.root = new Advancement(null, new NameKey("bingo", "root"), rootDisplay);
 	}
 	
