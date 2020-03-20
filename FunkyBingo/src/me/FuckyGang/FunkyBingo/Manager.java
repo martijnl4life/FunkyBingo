@@ -42,6 +42,11 @@ public class Manager
 	public boolean createCard(int difficulty, int size)
 	{
 		resetCard();
+		root.getDisplay().setCoordinates(-1, 1);
+		
+		this.advManager.addAdvancement(root); 
+		
+		
 		BingoTile[] tiles = getSelection(difficulty, size);
 		if (tiles == null || tiles.length < size*size)
 		{
@@ -49,17 +54,17 @@ public class Manager
 			return false;
 		}
 		
-		for (int x = 0; x < size; x++)
+		for (int y = 0; y < size; y++)
 		{
-			for (int y = 0; y < size; y++)
+			for (int x = 0; x < size; x++)
 			{
 				if (x == 0)
 				{
-					addAdvancement(tiles[y * size + x], root);
+					addAdvancement(tiles[y * size + x], root, x,y);
 				}
 				else
 				{
-					addAdvancement(tiles[y * size + x], advancements.get(advancements.size() - 1));
+					addAdvancement(tiles[y * size + x], advancements.get(advancements.size() - 1),x,y);
 				}
 				
 			}
@@ -117,9 +122,10 @@ public class Manager
 		}
 	}
 	
-	private void addAdvancement(BingoTile tile, Advancement parent)
+	private void addAdvancement(BingoTile tile, Advancement parent, double x, double y)
 	{
 		advancements.add(new Advancement(parent, tile.getId(), new AdvancementDisplay(tile.getIcon(), tile.getTitle(), tile.getDescription(), AdvancementFrame.TASK, false, true, AdvancementVisibility.ALWAYS)));
+		advancements.get(advancements.size() - 1).getDisplay().setCoordinates((float)x, (float)y);
 	}
 	
 	private void initAdvancements()
