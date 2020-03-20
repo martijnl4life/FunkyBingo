@@ -11,14 +11,16 @@ public class BingoTile
 	private Material icon;
 	private String title;
 	private String description;
+	private int criteria;
 	
-	public BingoTile(int difficulty, NameKey id, Material icon, String title, String description)
+	public BingoTile(int difficulty, NameKey id, Material icon, String title, String description, int criteria)
 	{
 		this.difficulty = difficulty;
 		this.id = id;
 		this.icon = icon;
 		this.title = title;
 		this.description = description;
+		this.criteria = criteria;
 	}
 	
 	public int getDifficluty()

@@ -138,22 +138,19 @@ public class Manager implements ManagerInterface
 	}
 	private void initAdvancements()
 	{
-		addBingoTile(0, "bingo", "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock1", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock2", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock3", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock4", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock5", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock6", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock7", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
-		addBingoTile(0, "bingo", "diamondblock8", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block");
+		addBingoTile(0, "bingo", "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock1", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock2", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock3", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock4", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock5", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock6", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock7", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "bingo", "diamondblock8", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 	}
 	
-	private void addBingoTile(int difficulty, String namespace, String key, Material icon, String title, String description)
+	private void addBingoTile(int difficulty, String namespace, String key, Material icon, String title, String description, int criteria)
 	{
-		bingotiles.add(new BingoTile(0, new NameKey(namespace, key), icon, title, description));
+		bingotiles.add(new BingoTile(0, new NameKey(namespace, key), icon, title, description, criteria));
 	}
-
-
-	
 }
