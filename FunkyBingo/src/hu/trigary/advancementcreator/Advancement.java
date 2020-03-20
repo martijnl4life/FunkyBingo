@@ -336,7 +336,7 @@ public class Advancement {
 	public static boolean activate(boolean reload, NamespacedKey id, String json) {
 		File file = new File(Bukkit.getWorlds().get(0).getWorldFolder(),
 				String.join(File.separator, "data", "advancements", id.getNamespace(), id.getKey()) + ".json");
-		Bukkit.getLogger().log(Level.SEVERE, file.getName() + "  " + file.getAbsolutePath());
+		
 		if (!file.exists()) {
 			try {
 				//noinspection deprecation

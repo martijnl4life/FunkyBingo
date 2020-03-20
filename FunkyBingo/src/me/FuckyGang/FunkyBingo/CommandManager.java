@@ -66,6 +66,16 @@ public class CommandManager
 				return false;
 			}
 		}
+		if (label.equalsIgnoreCase("log"))
+		{
+			if(args.length == 0)
+			{
+				card.logCard();
+				return true;
+			}
+			sender.sendMessage(ChatColor.RED + "" + "[FAILED]: wrong argument specified");
+			return false;
+		}
 		return false;
 	}
 	
