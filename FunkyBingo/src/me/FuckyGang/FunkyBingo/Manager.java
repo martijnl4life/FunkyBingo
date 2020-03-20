@@ -47,33 +47,37 @@ public class Manager implements ManagerInterface
 		this.advManager.addAdvancement(root); 
 		
 		
-		BingoTile[] tiles = getSelection(difficulty, size);
-		if (tiles == null || tiles.length < size*size)
-		{
-			Bukkit.getLogger().log(Level.SEVERE,"Not enough tiles");
-			return false;
-		}
+//		BingoTile[] tiles = getSelection(difficulty, size);
+//		if (tiles == null || tiles.length < size*size)
+//		{
+//			Bukkit.getLogger().log(Level.SEVERE,"Not enough tiles");
+//			return false;
+//		}
 		
-		Advancement prevAdv = null;
-		
-		for (int y = 0; y < size; y++)
+		Collections.shuffle(this.bingotiles);
+
+		for (int i = 0; i < bingotiles.size(); i+=size )
 		{
-			for (int x = 0; x < size; x++)
+			for (int j = 0; j < size; j++)
 			{
-				if (x == 0)
+				if (j == 0)
 				{
-					prevAdv = tiles[y*size + x].makeAdvancement(root, x, y);
+					bingotiles.get(i).makeAdvancement(root, j, i/size);
 				}
 				else
 				{
-					prevAdv = tiles[y * size + x].makeAdvancement(prevAdv, x, y);
+					bingotiles.get(i + j).makeAdvancement(bingotiles.get(i).getAdvancement(), j, i/size);
 				}
 				
 			}
+			
 		}
-		for (BingoTile tile : tiles)
+		for (BingoTile tile : bingotiles)
 		{
-			advManager.addAdvancement(tile.getAdvancement());
+			if (tile.getAdvancement() != null)
+			{
+				advManager.addAdvancement(tile.getAdvancement());
+			}
 		}
 		return true;
 	}
@@ -86,8 +90,11 @@ public class Manager implements ManagerInterface
 		{
 			for (BingoTile tile : bingotiles)
 			{
-				advManager.removeAdvancement(tile.getAdvancement());
-				tile.removeAdvancement();
+				if (tile.getAdvancement() != null)
+				{
+					advManager.removeAdvancement(tile.getAdvancement());
+					tile.removeAdvancement();
+				}
 			}
 		}
 	}

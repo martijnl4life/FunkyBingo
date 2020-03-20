@@ -29,7 +29,7 @@ public class EventManager implements Listener
 		}
 	}
 	
-	public void advance(Player player, Advancement advancement)
+	private void advance(Player player, Advancement advancement)
 	{
 		int progress = manager.getManager().getCriteriaProgress(player, advancement);
 		if (progress < advancement.getCriteria())
