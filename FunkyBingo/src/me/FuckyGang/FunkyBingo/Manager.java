@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -32,6 +33,15 @@ public class Manager implements ManagerInterface
 		if (managerList.containsKey(id))
 		{
 			getManager(id).addPlayer(player);
+		}
+	}
+	
+	@Override 
+	public void removePlayer(String id, Player player)
+	{
+		if (managerList.containsKey(id))
+		{
+			getManager(id).removePlayer(player);
 		}
 	}
 	
