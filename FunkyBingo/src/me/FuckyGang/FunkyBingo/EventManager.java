@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
@@ -23,35 +23,35 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
-	public void onEntityPickupItemEvent(InventoryClickEvent event)
+	public void onEntityPickupItemEvent(InventoryOpenEvent event)
 	{
 		if(event.getInventory().contains(Material.DIAMOND_BLOCK))
 		{
-			check((Player)event.getWhoClicked(),"diamondblock");
+			check((Player)event.getPlayer(),"diamondblock");
 		}
 		if(event.getInventory().contains(Material.BOOKSHELF))
 		{
-			check((Player)event.getWhoClicked(),"bookshelf");
+			check((Player)event.getPlayer(),"bookshelf");
 		}
 		if(event.getInventory().contains(Material.ENCHANTING_TABLE))
 		{
-			check((Player)event.getWhoClicked(),"enchantmenttable");
+			check((Player)event.getPlayer(),"enchantmenttable");
 		}
 		if(event.getInventory().contains(Material.END_CRYSTAL))
 		{
-			check((Player)event.getWhoClicked(),"endcrystal");
+			check((Player)event.getPlayer(),"endcrystal");
 		}
 		if(event.getInventory().contains(Material.EMERALD_BLOCK))
 		{
-			check((Player)event.getWhoClicked(),"emeraldblock");
+			check((Player)event.getPlayer(),"emeraldblock");
 		}
 		if(event.getInventory().contains(Material.GLISTERING_MELON_SLICE))
 		{
-			check((Player)event.getWhoClicked(),"glisteringmelonslice");
+			check((Player)event.getPlayer(),"glisteringmelonslice");
 		}
 		if(event.getInventory().contains(Material.COOKIE))
 		{
-			check((Player)event.getWhoClicked(),"cookie");
+			check((Player)event.getPlayer(),"cookie");
 		}
 	}
 	
