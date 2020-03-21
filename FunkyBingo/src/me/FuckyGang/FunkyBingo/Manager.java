@@ -4,18 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import eu.endercentral.crazy_advancements.Advancement;
-import eu.endercentral.crazy_advancements.AdvancementDisplay;
-import eu.endercentral.crazy_advancements.AdvancementDisplay.AdvancementFrame;
-import eu.endercentral.crazy_advancements.AdvancementVisibility;
-import eu.endercentral.crazy_advancements.NameKey;
-import eu.endercentral.crazy_advancements.manager.AdvancementManager;
 
 public class Manager implements ManagerInterface
 {
@@ -38,6 +30,15 @@ public class Manager implements ManagerInterface
 		if (managerList.containsKey(id))
 		{
 			getManager(id).addPlayer(player);
+		}
+	}
+	
+	@Override 
+	public void removePlayer(String id, Player player)
+	{
+		if (managerList.containsKey(id))
+		{
+			getManager(id).removePlayer(player);
 		}
 	}
 	

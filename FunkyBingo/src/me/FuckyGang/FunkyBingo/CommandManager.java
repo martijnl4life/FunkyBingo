@@ -19,72 +19,108 @@ public class CommandManager
 	{
 		if (label.equalsIgnoreCase("bc"))
 		{
+			/* /-1 0      1      2      3            4
+			 * /bc card   add    [card] [difficulty] [size]
+			 * /bc card   remove [card]
+			 * /bc player add    [card] <[player]>
+			 * /bc player remove [card] <[player]>
+			 */
 			switch(args[0])
 			{
-				// /bc create name difficulty size 
-				case "create":
-					if (manager.getManager(args[1]) == null)
+				case "card":
+				{
+					switch(args[1])
 					{
-						if (areIntegers(args[2], args[3]))
+						case "add":
 						{
-							int diff = Integer.parseInt(args[2]);
-							int size = Integer.parseInt(args[3]);
-							if (diff >= 0 && diff <= 2 && size >= 0 && size <= 5)
+							if (manager.getManager(args[2]) == null)
 							{
-								manager.createCard(args[1], diff, size);
+								if (areIntegers(args[3], args[4]))
+								{
+									int diff = Integer.parseInt(args[3]);
+									int size = Integer.parseInt(args[4]);
+									if (diff >= 0 && diff <= 2 && size >= 0 && size <= 5)
+									{
+										manager.createCard(args[2], diff, size);
+										sender.sendMessage(ChatColor.GREEN + "Successfully created card '" + args[2] + "'!");
+										return true;
+									}
+									else
+									{
+										sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: argument(s) out of range");
+										return false;
+									}
+								}
+								else
+								{
+									sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: argument(s) of '/bc create' must be integers");
+									return false;
+								}
+							}
+							else
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' already exists");
+								return false;
+							}
+						}
+						case "remove":
+						{
+							if (manager.getManager(args[2]) != null)
+							{
+								manager.resetCard(args[2]);
+								sender.sendMessage(ChatColor.GREEN + "Successfully removed card '" + args[2] + "'!");
 								return true;
 							}
 							else
 							{
-								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: argument(s) out of range");
+								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
 								return false;
 							}
 						}
+					}
+				}
+				case "player":
+				{
+					if (manager.getManager(args[2]) != null)
+					{
+						Player player;
+						if (args[3] != null)
+						{
+							player = Bukkit.getPlayer(args[3]);
+						}
 						else
 						{
-							sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: argument(s) of '/bc create' must be integers");
-							return false;
+							if (sender instanceof Player)
+							{
+								player = Bukkit.getPlayer(sender.getName());
+							}
+							else
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: command sender is not a player (specify a player)");
+								return false;
+							}
+						}
+						switch (args[1])
+						{
+							case "add":
+							{
+								manager.addPlayer(args[1], player);
+								sender.sendMessage(ChatColor.DARK_RED + "successfully added player '" + args[2] + "' to card'" + args[1] + "'!");
+								return true;
+							}
+							case "remove":
+							{
+								manager.removePlayer(args[1], player);
+								sender.sendMessage(ChatColor.DARK_RED + "successfully removed player '" + args[2] + "' from card'" + args[1] + "'!");
+								return true;
+							}
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[1] + "' already exists");
-						return false;
+						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[1] + "' does not exist");
 					}
-				case "reset":
-					break;
-				case "addplayer":
-					{
-						if (manager.getManager(args[1]) != null)
-						{
-							Player player;
-							if (args[2] != null)
-							{
-								player = Bukkit.getPlayer(args[2]);
-							}
-							else
-							{
-								if (sender instanceof Player)
-								{
-									player = Bukkit.getPlayer(sender.getName());
-								}
-								else
-								{
-									sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: command sender is not a player (specify a player)");
-									return false;
-								}
-							}
-							manager.addPlayer(args[1], player);
-							break;
-						}
-						else
-						{
-							sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[1] + "' does not exist");
-						}
-					}
-				default:
-					sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: not enough parameters");
-					return false;
+				}
 			}
 		}
 		return false;
