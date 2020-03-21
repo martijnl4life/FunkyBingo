@@ -1,5 +1,6 @@
 package me.FuckyGang.FunkyBingo;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -69,7 +70,11 @@ public class EventManager implements Listener
 		{
 			if (manager.getManager(namespace).hasPlayerInList(player.getUniqueId()))
 			{
-				advance(player,namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
+				ArrayList<Player> players = manager.getManager(namespace).getTeamMembers(player);
+				for (int i = 0; i< players.size(); i++)
+				{
+					advance(players.get(i),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
+				}
 			}
 		}
 	}

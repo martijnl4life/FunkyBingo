@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/dev/BuildTools/spigot-1.15.2.jar"/>
 	<classpathentry kind="lib" path="C:/dev/BuildTools/CrazyAdvancementsAPI.jar"/>
+	<classpathentry kind="lib" path="C:/dev/BuildTools/annotations-19.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
