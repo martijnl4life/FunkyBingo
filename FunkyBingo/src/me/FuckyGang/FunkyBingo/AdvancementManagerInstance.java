@@ -94,9 +94,9 @@ public class AdvancementManagerInstance {
 	
 	private void makeRoot()
 	{
-		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, false, false, AdvancementVisibility.ALWAYS);
-		rootDisplay.setBackgroundTexture("textures/block/concrete_orange.png");
+		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/dirt", false, false, AdvancementVisibility.ALWAYS);
 		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
+		rootDisplay.setBackgroundTexture("minecraft:textures/blocks/concrete_lime.png");
 		advManager.addAdvancement(root);
 	}
 }
