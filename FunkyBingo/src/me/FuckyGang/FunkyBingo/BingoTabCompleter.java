@@ -19,7 +19,7 @@ public class BingoTabCompleter implements TabCompleter
 		if(sender instanceof Player)
 		{ 
 			List<String> list = new ArrayList<String>();
-			if (cmd.getName().equalsIgnoreCase("bc") && args.length >= 2)
+			if (cmd.getName().equalsIgnoreCase("bc") && args.length == 2)
 			{
 				list.add("add");
 				list.add("remove");
@@ -29,7 +29,7 @@ public class BingoTabCompleter implements TabCompleter
 				}
 				return (List<String>)list;
 			}
-			else if (cmd.getName().equalsIgnoreCase("bc") && args.length >= 1)
+			else if (cmd.getName().equalsIgnoreCase("bc") && args.length == 1)
 			{
 				list.add("card");
 				list.add("player");
