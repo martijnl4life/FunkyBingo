@@ -85,7 +85,7 @@ public class CommandManager
 					if (manager.getManager(args[2]) != null)
 					{
 						Player player;
-						if (args[3] != null)
+						if (args.length == 4)
 						{
 							player = Bukkit.getPlayer(args[3]);
 						}
@@ -106,13 +106,13 @@ public class CommandManager
 							case "add":
 							{
 								manager.addPlayer(args[2], player);
-								sender.sendMessage(ChatColor.DARK_RED + "successfully added player '" + args[3] + "' to card'" + args[2] + "'!");
+								sender.sendMessage(ChatColor.GREEN + "successfully added player '" + args[3] + "' to card '" + args[2] + "'!");
 								return true;
 							}
 							case "remove":
 							{
 								manager.removePlayer(args[2], player);
-								sender.sendMessage(ChatColor.DARK_RED + "successfully removed player '" + args[3] + "' from card'" + args[2] + "'!");
+								sender.sendMessage(ChatColor.GREEN + "successfully removed player '" + args[3] + "' from card '" + args[2] + "'!");
 								return true;
 							}
 						}
