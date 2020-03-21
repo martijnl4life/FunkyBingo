@@ -17,6 +17,7 @@ public class Main extends JavaPlugin
         this.cmdManager = new CommandManager(this.manager);
         this.eventManager = new EventManager(this.manager);
         getServer().getPluginManager().registerEvents(eventManager, this);
+        getCommand("bc").setTabCompleter(new BingoTabCompleter());
     }
     
     @Override
