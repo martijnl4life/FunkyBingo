@@ -54,19 +54,18 @@ public class Manager implements ManagerInterface
 			Bukkit.getLogger().log(Level.SEVERE, "this nigga is null lol");
 		}
 		
-		for (int i = 0; i < holders.size(); i+=size )
+		for (int y = 0; y < size; y++ )
 		{
-			for (int j = 0; j < size; j++)
+			for (int x = 0; x < size; x++)
 			{
-				if (j == 0)
+				if (x == 0)
 				{
-					holders.get(i).makeAdvancement(id, getManager(id).getRoot(), j, i/size);
+					holders.get(y * size + x).makeAdvancement(id, getManager(id).getRoot(), x, y);
 				}
 				else
 				{
-					holders.get(i + j).makeAdvancement(id, holders.get(i).getAdvancement(id), j, i/size);
+					holders.get(y * size + x).makeAdvancement(id, holders.get(y * size + x - 1).getAdvancement(id), x, y);
 				}
-				
 			}
 			
 		}
