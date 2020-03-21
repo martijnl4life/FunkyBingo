@@ -5,12 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
-
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import eu.endercentral.crazy_advancements.Advancement;
 
 public class Manager implements ManagerInterface
 {
@@ -46,12 +45,15 @@ public class Manager implements ManagerInterface
 	@Override
 	public boolean createCard(String id, int difficulty, int size)
 	{
-		resetCard(id);
-		
 		this.managerList.put(id,new AdvancementManagerInstance(id) );
 	
 		Collections.shuffle(this.holders);
-
+		
+		if (getManager(id).getRoot() == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "this nigga is null lol");
+		}
+		
 		for (int i = 0; i < holders.size(); i+=size )
 		{
 			for (int j = 0; j < size; j++)
@@ -112,7 +114,7 @@ public class Manager implements ManagerInterface
 		addBingoTile(0, "diamondblock1", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 		addBingoTile(0, "diamondblock2", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 		addBingoTile(0, "diamondblock3", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "diamondblock4", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock4", Material.DIAMOND_BLOCK, "bitch me", "Obtain 1 Diamond Block", 1);
 		addBingoTile(0, "diamondblock5", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 		addBingoTile(0, "diamondblock6", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 		addBingoTile(0, "diamondblock7", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);

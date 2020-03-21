@@ -106,13 +106,13 @@ public class CommandManager
 							case "add":
 							{
 								manager.addPlayer(args[2], player);
-								sender.sendMessage(ChatColor.GREEN + "successfully added player '" + args[3] + "' to card '" + args[2] + "'!");
+								sender.sendMessage(ChatColor.GREEN + "successfully added player '" + player.getName() + "' to card '" + args[2] + "'!");
 								return true;
 							}
 							case "remove":
 							{
 								manager.removePlayer(args[2], player);
-								sender.sendMessage(ChatColor.GREEN + "successfully removed player '" + args[3] + "' from card '" + args[2] + "'!");
+								sender.sendMessage(ChatColor.GREEN + "successfully removed player '" + player.getName() + "' from card '" + args[2] + "'!");
 								return true;
 							}
 						}

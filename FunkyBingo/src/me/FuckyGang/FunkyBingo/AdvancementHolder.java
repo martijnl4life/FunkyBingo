@@ -22,7 +22,7 @@ public class AdvancementHolder
 	private String title;
 	private String description;
 	private int criteria;
-	private AdvancementVisibility visibility;
+	private AdvancementVisibility visibility = AdvancementVisibility.ALWAYS;
 	
 	public AdvancementHolder(int difficulty, String key, Material icon, String title, String description, int criteria)
 	{
