@@ -102,7 +102,7 @@ public class Manager implements ManagerInterface
 	
 	private boolean isAdvancementInNamespace(AdvancementHolder holder, String id)
 	{
-		return holder.getAdvancement(id) != null && holder.getNamespace().equals(id);
+		return holder.getAdvancement(id) != null;
 	}
 	
 	

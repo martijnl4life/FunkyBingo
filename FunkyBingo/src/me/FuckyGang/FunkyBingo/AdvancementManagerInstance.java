@@ -41,6 +41,7 @@ public class AdvancementManagerInstance {
 	public void removePlayer(Player player)
 	{
 		this.advManager.removePlayer(player);
+		this.playerList.remove(player.getName());
 	}
 	
 	public void removeAdvancement(Advancement adv)
@@ -48,14 +49,31 @@ public class AdvancementManagerInstance {
 		this.advManager.removeAdvancement(adv);
 	}
 	
+	public AdvancementManager getAdvancementManager()
+	{
+		return this.advManager;
+	}
+	
 	public Advancement getRoot()
 	{
-		return root;
+		return this.root;
 	}
 	
 	public String getId()
 	{
-		return id;
+		return this.id;
+	}
+	
+	public boolean hasPlayerInList(String playerName)
+	{
+		for (String name : playerList)
+		{
+			if (name.equalsIgnoreCase(playerName))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void makeRoot()
