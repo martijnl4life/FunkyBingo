@@ -29,6 +29,30 @@ public class EventManager implements Listener
 		{
 			check((Player)event.getWhoClicked(),"diamondblock");
 		}
+		if(event.getInventory().contains(Material.BOOKSHELF))
+		{
+			check((Player)event.getWhoClicked(),"bookshelf");
+		}
+		if(event.getInventory().contains(Material.ENCHANTING_TABLE))
+		{
+			check((Player)event.getWhoClicked(),"enchantmenttable");
+		}
+		if(event.getInventory().contains(Material.END_CRYSTAL))
+		{
+			check((Player)event.getWhoClicked(),"endcrystal");
+		}
+		if(event.getInventory().contains(Material.EMERALD_BLOCK))
+		{
+			check((Player)event.getWhoClicked(),"emeraldblock");
+		}
+		if(event.getInventory().contains(Material.GLISTERING_MELON_SLICE))
+		{
+			check((Player)event.getWhoClicked(),"glisteringmelonslice");
+		}
+		if(event.getInventory().contains(Material.COOKIE))
+		{
+			check((Player)event.getWhoClicked(),"cookie");
+		}
 	}
 	
 	private void check(Player player, String advancementKey)
