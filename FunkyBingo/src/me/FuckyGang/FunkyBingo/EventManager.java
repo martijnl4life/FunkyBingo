@@ -31,13 +31,13 @@ public class EventManager implements Listener
 			{
 				if (manager.getManager(namespace).hasPlayerInList(event.getWhoClicked().getUniqueId()))
 				{
-					advance((Player)event.getWhoClicked(),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, "diamondblock4")));
+					advance((Player)event.getWhoClicked(), namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, "diamondblock")));
 				}
 			}
 		}
 	}
 	
-	private void advance(Player player,String namespace, Advancement advancement)
+	private void advance(Player player, String namespace, Advancement advancement)
 	{
 		int progress = manager.getManager(namespace).getAdvancementManager().getCriteriaProgress(player, advancement);
 		if (progress < advancement.getCriteria())
