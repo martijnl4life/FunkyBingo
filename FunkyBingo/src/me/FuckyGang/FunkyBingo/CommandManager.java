@@ -131,6 +131,43 @@ public class CommandManager
 						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
 					}
 				}
+				case "team":
+				{
+					if (args.length == 4 && manager.getManager(args[3]) != null )
+					{
+						switch (args[1])
+						{
+							// bc team add [teamname] [card]
+						
+							case "add":
+							{
+								manager.getManager(args[3]).addTeam(args[2]);
+								sender.sendMessage(ChatColor.GREEN + "successfully added team '" + args[2] + "'!");
+								return true;
+							}
+							case "remove":
+							{
+								manager.getManager(args[3]).removeTeam(args[2]);
+								sender.sendMessage(ChatColor.GREEN + "successfully removed team '" + args[2] + "'!");
+								return true;
+							}
+							case "update":
+							{
+								manager.getManager(args[3]).updateTeams();
+								sender.sendMessage(ChatColor.GREEN + "successfully updated teams " + "!");
+								return true;
+							}
+							default:
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: does not recognise command");
+							}
+						}
+					}
+					else
+					{
+						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
+					}
+				}
 				default:
 				{
 					sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: does not recognise command");
