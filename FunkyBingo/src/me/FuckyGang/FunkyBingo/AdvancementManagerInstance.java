@@ -68,9 +68,9 @@ public class AdvancementManagerInstance {
 	
 	public void removeAllPlayers()
 	{
-		for (UUID playerId : playerList)
+		for (int i = 0; i < playerList.size(); i++)
 		{
-			removePlayer(Bukkit.getOfflinePlayer(playerId).getPlayer());
+			removePlayer(Bukkit.getOfflinePlayer(playerList.get(i)).getPlayer());
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class AdvancementManagerInstance {
 	private void makeRoot()
 	{
 		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, false, false, AdvancementVisibility.ALWAYS);
-		rootDisplay.setBackgroundTexture("textures/block/concrete_orange.png");
+		rootDisplay.setBackgroundTexture("textures/block/stone.png");
 		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
 		advManager.addAdvancement(root);
 	}

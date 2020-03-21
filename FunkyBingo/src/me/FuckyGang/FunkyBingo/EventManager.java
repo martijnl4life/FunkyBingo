@@ -27,17 +27,22 @@ public class EventManager implements Listener
 	{
 		if(event.getInventory().contains(Material.DIAMOND_BLOCK))
 		{
-			for (String namespace : namespaces)
+			check((Player)event.getWhoClicked(),"diamondblock");
+		}
+	}
+	
+	private void check(Player player, String advancementKey)
+	{
+		for (String namespace : namespaces)
+		{
+			if (manager.getManager(namespace).hasPlayerInList(player.getUniqueId()))
 			{
-				if (manager.getManager(namespace).hasPlayerInList(event.getWhoClicked().getUniqueId()))
-				{
-					advance((Player)event.getWhoClicked(), namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, "diamondblock")));
-				}
+				advance(player,namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
 			}
 		}
 	}
 	
-	private void advance(Player player, String namespace, Advancement advancement)
+	private void advance(Player player,String namespace, Advancement advancement)
 	{
 		int progress = manager.getManager(namespace).getAdvancementManager().getCriteriaProgress(player, advancement);
 		if (progress < advancement.getCriteria())
