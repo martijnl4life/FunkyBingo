@@ -105,21 +105,21 @@ public class CommandManager
 						{
 							case "add":
 							{
-								manager.addPlayer(args[1], player);
-								sender.sendMessage(ChatColor.DARK_RED + "successfully added player '" + args[2] + "' to card'" + args[1] + "'!");
+								manager.addPlayer(args[2], player);
+								sender.sendMessage(ChatColor.DARK_RED + "successfully added player '" + args[3] + "' to card'" + args[2] + "'!");
 								return true;
 							}
 							case "remove":
 							{
-								manager.removePlayer(args[1], player);
-								sender.sendMessage(ChatColor.DARK_RED + "successfully removed player '" + args[2] + "' from card'" + args[1] + "'!");
+								manager.removePlayer(args[2], player);
+								sender.sendMessage(ChatColor.DARK_RED + "successfully removed player '" + args[3] + "' from card'" + args[2] + "'!");
 								return true;
 							}
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[1] + "' does not exist");
+						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
 					}
 				}
 			}

@@ -17,8 +17,6 @@ public class Manager implements ManagerInterface
 	private Map<String, AdvancementManagerInstance> managerList;
 	private ArrayList<AdvancementHolder> holders;
 	
-	private Advancement root;
-	
 	public Manager()
 	{
 		this.managerList = new HashMap<String, AdvancementManagerInstance>();
@@ -49,10 +47,8 @@ public class Manager implements ManagerInterface
 	public boolean createCard(String id, int difficulty, int size)
 	{
 		resetCard(id);
-		root.getDisplay().setCoordinates(-1, 1);
 		
 		this.managerList.put(id,new AdvancementManagerInstance(id) );
-		this.managerList.get(id).addAdvancement(root);
 	
 		Collections.shuffle(this.holders);
 
