@@ -23,6 +23,10 @@ public class BingoTabCompleter implements TabCompleter
 			{
 				list.add("add");
 				list.add("remove");
+				if (args[0].equalsIgnoreCase("team"))
+				{
+					list.add("update");
+				}
 				return (List<String>)list;
 			}
 			else if (cmd.getName().equalsIgnoreCase("bc") && args.length >= 1)
