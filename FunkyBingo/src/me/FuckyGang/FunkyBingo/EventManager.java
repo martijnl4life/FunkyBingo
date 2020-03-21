@@ -29,7 +29,7 @@ public class EventManager implements Listener
 		{
 			for (String namespace : namespaces)
 			{
-				if (manager.getManager(namespace).hasPlayerInList(event.getWhoClicked().getName()))
+				if (manager.getManager(namespace).hasPlayerInList(event.getWhoClicked().getUniqueId()))
 				{
 					advance((Player)event.getWhoClicked(),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, "diamondblock4")));
 				}

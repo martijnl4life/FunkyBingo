@@ -1,6 +1,7 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,13 +18,13 @@ import eu.endercentral.crazy_advancements.manager.AdvancementManager;
 public class AdvancementManagerInstance {
 	private AdvancementManager advManager;
 	private final String id;
-	private ArrayList<String> playerList;
+	private ArrayList<UUID> playerList;
 	private Advancement root;
 	
 	public AdvancementManagerInstance(String id)
 	{
 		this.advManager = CrazyAdvancements.getNewAdvancementManager();
-		this.playerList = new ArrayList<String>();
+		this.playerList = new ArrayList<UUID>();
 		this.id = id;
 		makeRoot();
 	}
@@ -31,7 +32,7 @@ public class AdvancementManagerInstance {
 	public void addPlayer(Player player)
 	{
 		this.advManager.addPlayer(player);
-		this.playerList.add(player.getName());
+		this.playerList.add(player.getUniqueId());
 	}
 	
 	public void addAdvancement(Advancement... adv)
@@ -42,7 +43,7 @@ public class AdvancementManagerInstance {
 	public void removePlayer(Player player)
 	{
 		this.advManager.removePlayer(player);
-		this.playerList.remove(player.getName());
+		this.playerList.remove(player.getUniqueId());
 	}
 	
 	public void removeAdvancement(Advancement adv)
@@ -67,12 +68,9 @@ public class AdvancementManagerInstance {
 	
 	public void removeAllPlayers()
 	{
-		for (String playerName : playerList)
+		for (UUID playerId : playerList)
 		{
-			if (Bukkit.getPlayer(playerName).isOnline())
-			{
-				removePlayer(Bukkit.getPlayer(playerName));
-			}
+			removePlayer(Bukkit.getOfflinePlayer(playerId).getPlayer());
 		}
 	}
 	
@@ -81,11 +79,11 @@ public class AdvancementManagerInstance {
 		return this.id;
 	}
 	
-	public boolean hasPlayerInList(String playerName)
+	public boolean hasPlayerInList(UUID playerId)
 	{
-		for (String name : playerList)
+		for (UUID id : playerList)
 		{
-			if (name.equalsIgnoreCase(playerName))
+			if (id == playerId)
 			{
 				return true;
 			}
