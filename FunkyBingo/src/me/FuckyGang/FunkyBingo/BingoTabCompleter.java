@@ -29,6 +29,7 @@ public class BingoTabCompleter implements TabCompleter
 			{
 				list.add("card");
 				list.add("player");
+				list.add("team");
 				return (List<String>)list;
 			}
 		}
