@@ -4,18 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
+import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import eu.endercentral.crazy_advancements.Advancement;
-import eu.endercentral.crazy_advancements.AdvancementDisplay;
-import eu.endercentral.crazy_advancements.AdvancementDisplay.AdvancementFrame;
-import eu.endercentral.crazy_advancements.AdvancementVisibility;
-import eu.endercentral.crazy_advancements.NameKey;
-import eu.endercentral.crazy_advancements.manager.AdvancementManager;
 
 public class Manager implements ManagerInterface
 {
@@ -122,5 +116,10 @@ public class Manager implements ManagerInterface
 	private void addBingoTile(int difficulty, String key, Material icon, String title, String description, int criteria)
 	{
 		holders.add(new AdvancementHolder(0, key, icon, title, description, criteria));
+	}
+
+	@Override
+	public Set<String> getNamespaces() {
+		return managerList.keySet();
 	}
 }

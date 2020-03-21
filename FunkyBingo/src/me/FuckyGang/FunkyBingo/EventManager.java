@@ -1,40 +1,53 @@
 package me.FuckyGang.FunkyBingo;
 
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityPickupItemEvent;
-import eu.endercentral.crazy_advancements.Advancement;
-import eu.endercentral.crazy_advancements.NameKey;
+import java.util.Set;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+import eu.endercentral.crazy_advancements.Advancement;
+import eu.endercentral.crazy_advancements.NameKey;
 
 public class EventManager implements Listener
 {
 	private ManagerInterface manager;
+	private Set<String> namespaces;
 	
 	public EventManager(ManagerInterface manager)
 	{
 		this.manager = manager;
+		this.namespaces = manager.getNamespaces();
 	}
 	
 	@EventHandler
-	public void onEntityPickupItemEvent(EntityPickupItemEvent event)
+	public void onEntityPickupItemEvent(InventoryClickEvent event)
 	{
-		if (event.getItem().getItemStack().getType() == Material.DIAMOND_BLOCK)
+		if(event.getInventory().contains(Material.DIAMOND_BLOCK))
 		{
-			if (event.getEntity() instanceof Player)
+			for (String namespace : namespaces)
 			{
-				advance((Player)event.getEntity(), manager.getManager().getAdvancement(new NameKey("bingo", "diamondblock4")));
+				if (manager.getManager(namespace).hasPlayerInList(event.getWhoClicked().getName()))
+				{
+					advance((Player)event.getWhoClicked(),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, "diamondblock4")));
+				}
 			}
 		}
 	}
 	
-	private void advance(Player player, Advancement advancement)
+	private void advance(Player player,String namespace, Advancement advancement)
 	{
-		int progress = manager.getManager().getCriteriaProgress(player, advancement);
+		int progress = manager.getManager(namespace).getAdvancementManager().getCriteriaProgress(player, advancement);
 		if (progress < advancement.getCriteria())
 		{
-			manager.getManager().setCriteriaProgress(player, advancement, progress + 1);
+			manager.getManager(namespace).getAdvancementManager().setCriteriaProgress(player, advancement, progress + 1);
 		}
+	}
+	
+	private NameKey generateNameKey(String namespace, String key)
+	{
+		return new NameKey(namespace, key);
 	}
 }
