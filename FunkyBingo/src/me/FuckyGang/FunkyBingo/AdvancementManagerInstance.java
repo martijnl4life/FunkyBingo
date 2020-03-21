@@ -68,9 +68,9 @@ public class AdvancementManagerInstance {
 	
 	public void removeAllPlayers()
 	{
-		for (UUID playerId : playerList)
+		for (int i = 0; i < playerList.size(); i++)
 		{
-			removePlayer(Bukkit.getOfflinePlayer(playerId).getPlayer());
+			removePlayer(Bukkit.getOfflinePlayer(playerList.get(i)).getPlayer());
 		}
 	}
 	
