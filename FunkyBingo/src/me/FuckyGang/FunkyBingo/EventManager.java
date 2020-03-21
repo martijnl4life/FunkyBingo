@@ -53,6 +53,14 @@ public class EventManager implements Listener
 		{
 			check((Player)event.getPlayer(),"cookie");
 		}
+		if(event.getInventory().contains(Material.BRICK, 64))
+		{
+			check((Player)event.getPlayer(),"brick");
+		}
+		if(event.getInventory().contains(Material.SEA_PICKLE, 32))
+		{
+			check((Player)event.getPlayer(),"seapickle");
+		}
 	}
 	
 	private void check(Player player, String advancementKey)
