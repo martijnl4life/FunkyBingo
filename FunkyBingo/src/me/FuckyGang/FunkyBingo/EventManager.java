@@ -1,12 +1,15 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.Set;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
@@ -61,6 +64,12 @@ public class EventManager implements Listener
 		{
 			check((Player)event.getPlayer(),"seapickle");
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerEvent(PlayerEvent event)
+	{
+		Bukkit.getLogger().log(Level.SEVERE, event.getEventName());
 	}
 	
 	private void check(Player player, String advancementKey)
