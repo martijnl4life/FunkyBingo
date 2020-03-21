@@ -114,9 +114,9 @@ public class Manager implements ManagerInterface
 		addBingoTile(0, "enchantmenttable", Material.ENCHANTING_TABLE, "Time for some magic :O", "Obtain 1 Enchantment Table", 1);
 		addBingoTile(0, "endcrystal", Material.END_CRYSTAL, "End Crystal EZ CLAP", "Obtain 1 End Crystal", 1);
 		addBingoTile(0, "emeraldblock", Material.EMERALD_BLOCK, "For the Villager :)", "Obtain 1 Emerald Block", 1);
-		addBingoTile(0, "brick", Material.BRICK, "Just like Legos", "Obtain 64 bricks", 64);
+		addBingoTile(0, "brick", Material.BRICK, "Just like Legos", "Obtain 64 bricks", 1);
 		addBingoTile(0, "glisteringmelonslice", Material.GLISTERING_MELON_SLICE, "Watermelone", "Obtain 1 Glistering Melon Slice", 1);
-		addBingoTile(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles", 32);
+		addBingoTile(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles", 1);
 		addBingoTile(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie", 1);
 	}
 	

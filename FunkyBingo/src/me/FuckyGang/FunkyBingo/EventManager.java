@@ -28,48 +28,42 @@ public class EventManager implements Listener
 	@EventHandler
 	public void onEntityPickupItemEvent(InventoryOpenEvent event)
 	{
-		if(event.getInventory().contains(Material.DIAMOND_BLOCK))
+		if(event.getPlayer().getInventory().contains(Material.DIAMOND_BLOCK))
 		{
 			check((Player)event.getPlayer(),"diamondblock");
 		}
-		if(event.getInventory().contains(Material.BOOKSHELF))
+		if(event.getPlayer().getInventory().contains(Material.BOOKSHELF))
 		{
 			check((Player)event.getPlayer(),"bookshelf");
 		}
-		if(event.getInventory().contains(Material.ENCHANTING_TABLE))
+		if(event.getPlayer().getInventory().contains(Material.ENCHANTING_TABLE))
 		{
 			check((Player)event.getPlayer(),"enchantmenttable");
 		}
-		if(event.getInventory().contains(Material.END_CRYSTAL))
+		if(event.getPlayer().getInventory().contains(Material.END_CRYSTAL))
 		{
 			check((Player)event.getPlayer(),"endcrystal");
 		}
-		if(event.getInventory().contains(Material.EMERALD_BLOCK))
+		if(event.getPlayer().getInventory().contains(Material.EMERALD_BLOCK))
 		{
 			check((Player)event.getPlayer(),"emeraldblock");
 		}
-		if(event.getInventory().contains(Material.GLISTERING_MELON_SLICE))
+		if(event.getPlayer().getInventory().contains(Material.GLISTERING_MELON_SLICE))
 		{
 			check((Player)event.getPlayer(),"glisteringmelonslice");
 		}
-		if(event.getInventory().contains(Material.COOKIE))
+		if(event.getPlayer().getInventory().contains(Material.COOKIE))
 		{
 			check((Player)event.getPlayer(),"cookie");
 		}
-		if(event.getInventory().contains(Material.BRICK, 64))
+		if(event.getPlayer().getInventory().contains(Material.BRICK, 64))
 		{
 			check((Player)event.getPlayer(),"brick");
 		}
-		if(event.getInventory().contains(Material.SEA_PICKLE, 32))
+		if(event.getPlayer().getInventory().contains(Material.SEA_PICKLE, 32))
 		{
 			check((Player)event.getPlayer(),"seapickle");
 		}
-	}
-	
-	@EventHandler
-	public void onPlayerEvent(PlayerEvent event)
-	{
-		Bukkit.getLogger().log(Level.SEVERE, event.getEventName());
 	}
 	
 	private void check(Player player, String advancementKey)
