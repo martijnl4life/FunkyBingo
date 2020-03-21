@@ -79,6 +79,6 @@ public class AdvancementManagerInstance {
 	private void makeRoot()
 	{
 		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/gray_concrete", false, false, AdvancementVisibility.ALWAYS);
-		this.root = new Advancement(null, new NameKey("bingo", "root"), rootDisplay);
+		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
 	}
 }
