@@ -68,7 +68,7 @@ public class EventManager implements Listener
 	{
 		for (String namespace : namespaces)
 		{
-			if (manager.getManager(namespace).hasPlayerInList(player.getUniqueId()))
+			if (manager.getManager(namespace).hasPlayerInListOrTeam(player.getUniqueId()))
 			{
 				ArrayList<Player> players = manager.getManager(namespace).getTeamMembers(player);
 				for (int i = 0; i< players.size(); i++)

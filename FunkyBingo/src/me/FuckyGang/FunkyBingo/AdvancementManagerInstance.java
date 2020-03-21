@@ -74,7 +74,6 @@ public class AdvancementManagerInstance {
 	
 	public void updateTeams()
 	{
-		
 		for (Team t : teams)
 		{
 			Set<String> entries = t.getEntries();
@@ -160,11 +159,18 @@ public class AdvancementManagerInstance {
 		
 	}
 	
-	public boolean hasPlayerInList(UUID playerId)
+	public boolean hasPlayerInListOrTeam(UUID playerId)
 	{
 		for (UUID id : playerList)
 		{
 			if (id == playerId)
+			{
+				return true;
+			}
+		}
+		for (Team t : teams)
+		{
+			if (t.hasEntry(Bukkit.getPlayer(playerId).getName()))
 			{
 				return true;
 			}
