@@ -2,6 +2,8 @@ package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -12,71 +14,65 @@ import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.AdvancementDisplay;
 import eu.endercentral.crazy_advancements.AdvancementDisplay.AdvancementFrame;
 import eu.endercentral.crazy_advancements.AdvancementVisibility;
-import eu.endercentral.crazy_advancements.CrazyAdvancements;
 import eu.endercentral.crazy_advancements.NameKey;
 import eu.endercentral.crazy_advancements.manager.AdvancementManager;
 
 public class Manager implements ManagerInterface
 {
-	private AdvancementManager advManager;
-	private ArrayList<BingoTile> bingotiles;
+	private Map<String, AdvancementManagerInstance> managerList;
+	private ArrayList<AdvancementHolder> holders;
 	
 	private Advancement root;
 	
 	public Manager()
 	{
-		this.advManager = CrazyAdvancements.getNewAdvancementManager();
-		this.bingotiles = new ArrayList<BingoTile>();
+		this.managerList = new HashMap<String, AdvancementManagerInstance>();
+		this.holders = new ArrayList<AdvancementHolder>();
 		initAdvancements();
-		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, "Bingo", "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/gray_concrete", false, false, AdvancementVisibility.ALWAYS);
-		this.root = new Advancement(null, new NameKey("bingo", "root"), rootDisplay);
+
 	}
 	
 	@Override
-	public void update(Player player)
+	public void addPlayer(String id, Player player)
 	{
-		advManager.addPlayer(player);
+		if (managerList.containsKey(id))
+		{
+			getManager(id).addPlayer(player);
+		}
 	}
 	
 	@Override
-	public boolean createCard(int difficulty, int size)
+	public boolean createCard(String id, int difficulty, int size)
 	{
-		resetCard();
+		resetCard(id);
 		root.getDisplay().setCoordinates(-1, 1);
 		
-		this.advManager.addAdvancement(root); 
-		
-		
-//		BingoTile[] tiles = getSelection(difficulty, size);
-//		if (tiles == null || tiles.length < size*size)
-//		{
-//			Bukkit.getLogger().log(Level.SEVERE,"Not enough tiles");
-//			return false;
-//		}
-		
-		Collections.shuffle(this.bingotiles);
+		this.managerList.put(id,new AdvancementManagerInstance(id) );
+		this.managerList.get(id).addAdvancement(root);
+	
+		Collections.shuffle(this.holders);
 
-		for (int i = 0; i < bingotiles.size(); i+=size )
+		for (int i = 0; i < holders.size(); i+=size )
 		{
 			for (int j = 0; j < size; j++)
 			{
 				if (j == 0)
 				{
-					bingotiles.get(i).makeAdvancement(root, j, i/size);
+					holders.get(i).makeAdvancement(id, getManager(id).getRoot(), j, i/size);
 				}
 				else
 				{
-					bingotiles.get(i + j).makeAdvancement(bingotiles.get(i).getAdvancement(), j, i/size);
+					holders.get(i + j).makeAdvancement(id, holders.get(i).getAdvancement(id), j, i/size);
 				}
 				
 			}
 			
 		}
-		for (BingoTile tile : bingotiles)
+		for (AdvancementHolder holder : holders)
 		{
-			if (tile.getAdvancement() != null)
+			if (isAdvancementInNamespace(holder, id))
 			{
-				advManager.addAdvancement(tile.getAdvancement());
+				getManager(id).addAdvancement(holder.getAdvancement(id));
 			}
 		}
 		return true;
@@ -84,76 +80,47 @@ public class Manager implements ManagerInterface
 	
 
 	@Override
-	public void resetCard()
+	public void resetCard(String id)
 	{
-		if (!bingotiles.isEmpty())
+		if (!holders.isEmpty())
 		{
-			for (BingoTile tile : bingotiles)
+			for (AdvancementHolder holder : holders)
 			{
-				if (tile.getAdvancement() != null)
+				if (isAdvancementInNamespace(holder, id))
 				{
-					advManager.removeAdvancement(tile.getAdvancement());
-					tile.removeAdvancement();
+					getManager(id).removeAdvancement(holder.getAdvancement(id));
+					holder.removeAdvancement(id);
 				}
 			}
 		}
 	}
 	
 	@Override
-	public AdvancementManager getManager() {
-		return advManager;
+	public AdvancementManagerInstance getManager(String id) {
+		return this.managerList.get(id);
 	}
 	
-	
-	private BingoTile[] getSelection(int difficulty, int size)
+	private boolean isAdvancementInNamespace(AdvancementHolder holder, String id)
 	{
-		BingoTile[] result = new BingoTile[size * size];
-		ArrayList<BingoTile> selection = getTilesDifficulty(difficulty);
-		Collections.shuffle((ArrayList<BingoTile>)selection);
-		
-		if (selection.size() >= size * size)
-		{
-			for (int i = 0; i < size * size; i++)
-			{
-				result[i] = selection.get(i);
-			}
-			return result;
-		}
-		else
-		{
-			Bukkit.getLogger().log(Level.SEVERE,"Not enough tiles in difficulty" + difficulty);
-			return null;
-		}
+		return holder.getAdvancement(id) != null && holder.getNamespace().equals(id);
 	}
 	
-	private ArrayList<BingoTile> getTilesDifficulty(int difficulty)
-	{
-		ArrayList<BingoTile> tiles = new ArrayList<BingoTile>();
-		for (BingoTile tile : this.bingotiles)
-		{
-			if (tile.getDifficluty() == difficulty || difficulty == 0)
-			{
-				tiles.add(tile);
-			}
-		}
-		return tiles;
-	}
 	
 	private void initAdvancements()
 	{
-		addBingoTile(0, "bingo", "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock1", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock2", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock3", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock4", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock5", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock6", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock7", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bingo", "diamondblock8", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock0", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock1", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock2", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock3", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock4", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock5", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock6", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock7", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
+		addBingoTile(0, "diamondblock8", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
 	}
 	
-	private void addBingoTile(int difficulty, String namespace, String key, Material icon, String title, String description, int criteria)
+	private void addBingoTile(int difficulty, String key, Material icon, String title, String description, int criteria)
 	{
-		bingotiles.add(new BingoTile(0, new NameKey(namespace, key), icon, title, description, criteria));
+		holders.add(new AdvancementHolder(0, key, icon, title, description, criteria));
 	}
 }
