@@ -68,7 +68,7 @@ public class CommandManager
 						{
 							if (manager.getManager(args[2]) != null)
 							{
-								manager.resetCard(args[2]);
+								manager.removeManager(args[2]);
 								sender.sendMessage(ChatColor.GREEN + "Successfully removed card '" + args[2] + "'!");
 								return true;
 							}
@@ -77,6 +77,11 @@ public class CommandManager
 								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
 								return false;
 							}
+							
+						}
+						default:
+						{
+							sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: does not recognise command");
 						}
 					}
 				}
@@ -115,12 +120,20 @@ public class CommandManager
 								sender.sendMessage(ChatColor.GREEN + "successfully removed player '" + player.getName() + "' from card '" + args[2] + "'!");
 								return true;
 							}
+							default:
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: does not recognise command");
+							}
 						}
 					}
 					else
 					{
 						sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: card '" + args[2] + "' does not exist");
 					}
+				}
+				default:
+				{
+					sender.sendMessage(ChatColor.DARK_RED + "[FAILED]: does not recognise command");
 				}
 			}
 		}

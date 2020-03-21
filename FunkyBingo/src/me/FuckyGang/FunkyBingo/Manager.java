@@ -49,11 +49,8 @@ public class Manager implements ManagerInterface
 	
 		Collections.shuffle(this.holders);
 		
-		if (getManager(id).getRoot() == null)
-		{
-			Bukkit.getLogger().log(Level.SEVERE, "this nigga is null lol");
-		}
-		
+		getManager(id).getRoot().getDisplay().setCoordinates(-1, (float)((int)(size/2))); 
+
 		for (int y = 0; y < size; y++ )
 		{
 			for (int x = 0; x < size; x++)
@@ -81,7 +78,7 @@ public class Manager implements ManagerInterface
 	
 
 	@Override
-	public void resetCard(String id)
+	public void removeManager(String id)
 	{
 		if (!holders.isEmpty())
 		{
@@ -94,6 +91,9 @@ public class Manager implements ManagerInterface
 				}
 			}
 		}
+		getManager(id).removeRoot();
+		getManager(id).removeAllPlayers();
+		managerList.remove(id);
 	}
 	
 	@Override

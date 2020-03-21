@@ -2,6 +2,7 @@ package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -59,6 +60,22 @@ public class AdvancementManagerInstance {
 		return this.root;
 	}
 	
+	public void removeRoot()
+	{
+		removeAdvancement(root);
+	}
+	
+	public void removeAllPlayers()
+	{
+		for (String playerName : playerList)
+		{
+			if (Bukkit.getPlayer(playerName).isOnline())
+			{
+				removePlayer(Bukkit.getPlayer(playerName));
+			}
+		}
+	}
+	
 	public String getId()
 	{
 		return this.id;
@@ -76,9 +93,11 @@ public class AdvancementManagerInstance {
 		return false;
 	}
 	
+	
 	private void makeRoot()
 	{
 		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, "block/dirt", false, false, AdvancementVisibility.ALWAYS);
 		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
+		advManager.addAdvancement(root);
 	}
 }
