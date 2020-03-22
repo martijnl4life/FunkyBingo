@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.bukkit.entity.Player;
 
-
 public interface ManagerInterface {
 	public boolean createCard(String id, int difficulty, int size);
 	public void removeManager(String id);

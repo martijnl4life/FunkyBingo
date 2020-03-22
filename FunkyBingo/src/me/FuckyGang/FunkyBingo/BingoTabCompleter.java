@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class BingoTabCompleter implements TabCompleter 
 {
-
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) 
 	{
@@ -37,8 +36,6 @@ public class BingoTabCompleter implements TabCompleter
 				return (List<String>)list;
 			}
 		}
-		
 		return null;
 	}
-	
 }

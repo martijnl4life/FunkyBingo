@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -75,7 +73,6 @@ public class Manager implements ManagerInterface
 		}
 		return true;
 	}
-	
 
 	@Override
 	public void removeManager(String id)
@@ -104,8 +101,7 @@ public class Manager implements ManagerInterface
 	private boolean isAdvancementInNamespace(AdvancementHolder holder, String id)
 	{
 		return holder.getAdvancement(id) != null;
-	}
-	
+	}	
 	
 	private void initAdvancements()
 	{

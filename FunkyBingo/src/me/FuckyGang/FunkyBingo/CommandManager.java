@@ -19,7 +19,6 @@ public class CommandManager
 	{
 		if (label.equalsIgnoreCase("bc"))
 		{
-			
 			/* /-1 0      1      2      3            4
 			 * /bc card   add    [card] [difficulty] [size]
 			 * /bc card   remove [card]
