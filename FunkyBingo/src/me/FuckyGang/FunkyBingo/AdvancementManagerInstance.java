@@ -164,7 +164,7 @@ public class AdvancementManagerInstance {
 	private void makeRoot()
 	{
 		AdvancementDisplay rootDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.TASK, false, false, AdvancementVisibility.ALWAYS);
-		rootDisplay.setBackgroundTexture("textures/block/stone.png");
+		rootDisplay.setBackgroundTexture("textures/block/orange_concrete.png");
 		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
 		advManager.addAdvancement(root);
 	}
