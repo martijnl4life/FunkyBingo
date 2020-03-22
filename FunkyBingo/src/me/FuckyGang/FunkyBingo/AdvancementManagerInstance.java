@@ -23,7 +23,6 @@ public class AdvancementManagerInstance {
 	private ArrayList<UUID> playerList;
 	private ArrayList<Team> teams;
 	private Advancement root;
-	private boolean hasTeam;
 	
 	public AdvancementManagerInstance(String id)
 	{
@@ -31,7 +30,6 @@ public class AdvancementManagerInstance {
 		this.playerList = new ArrayList<UUID>();
 		this.teams = new ArrayList<Team>();
 		this.id = id;
-		this.hasTeam = false;
 		makeRoot();
 	}
 	
@@ -60,16 +58,11 @@ public class AdvancementManagerInstance {
 	public void addTeam(String teamName)
 	{
 		teams.add(Bukkit.getServer().getScoreboardManager().getMainScoreboard().getTeam(teamName));
-		this.hasTeam = true;
 	}
 	
 	public void removeTeam(String teamName)
 	{
 		teams.remove(Bukkit.getServer().getScoreboardManager().getMainScoreboard().getTeam(teamName));
-		if (teams.isEmpty())
-		{
-			this.hasTeam = false;
-		}
 	}
 	
 	public void updateTeams()
@@ -90,31 +83,21 @@ public class AdvancementManagerInstance {
 	public ArrayList<Player> getTeamMembers(Player player)
 	{
 		ArrayList<Player> teamMembers= new ArrayList<Player>();
-
-		teamMembers.add(player);
-		if (hasTeams())
+		if (teams.size() > 0)
 		{
-			for (Team t : teams)
+			for (Team team : teams)
 			{
-				if (t.hasEntry(player.getName()))
+				if (team.hasEntry(player.getName()))
 				{
-					Set<String> entries = t.getEntries();
-					for (String s : entries)
+					Set<String> entries = team.getEntries();
+					for (String entry : entries)
 					{
-						if (!s.equals(player.getName()))
-						{
-							teamMembers.add(Bukkit.getPlayer(s));
-						}
+						teamMembers.add(Bukkit.getPlayer(entry));
 					}
 				}
 			}
 		}
 		return teamMembers;
-	}
-	
-	public boolean hasTeams()
-	{
-		return hasTeam;
 	}
 	
 	public AdvancementManager getAdvancementManager()
@@ -177,7 +160,6 @@ public class AdvancementManagerInstance {
 		}
 		return false;
 	}
-	
 	
 	private void makeRoot()
 	{
