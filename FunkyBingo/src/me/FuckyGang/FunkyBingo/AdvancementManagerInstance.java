@@ -82,7 +82,8 @@ public class AdvancementManagerInstance {
 	
 	public ArrayList<Player> getTeamMembers(Player player)
 	{
-		ArrayList<Player> teamMembers= new ArrayList<Player>();
+		ArrayList<Player> teamMembers = new ArrayList<Player>();
+		teamMembers.add(player);
 		if (teams.size() > 0)
 		{
 			for (Team team : teams)
@@ -92,7 +93,10 @@ public class AdvancementManagerInstance {
 					Set<String> entries = team.getEntries();
 					for (String entry : entries)
 					{
-						teamMembers.add(Bukkit.getPlayer(entry));
+						if (!entry.equals(player.getName()))
+						{
+							teamMembers.add(Bukkit.getPlayer(entry));
+						}
 					}
 				}
 			}

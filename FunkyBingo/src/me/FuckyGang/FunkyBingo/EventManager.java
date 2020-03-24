@@ -37,7 +37,7 @@ public class EventManager implements Listener
 	{
 		for (AdvancementHolder ah : inInventory)
 		{
-			Map<Material, Integer> temp = new HashMap<Material, Integer>(ah.getMaterials());
+			Map<Material, Integer> temp = ah.getMaterials();
 			boolean hasAllItems = true;
 			for (Map.Entry<Material, Integer> entry : temp.entrySet())
 			{
