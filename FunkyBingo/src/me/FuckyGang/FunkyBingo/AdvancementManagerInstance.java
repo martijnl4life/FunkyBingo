@@ -23,6 +23,7 @@ public class AdvancementManagerInstance {
 	private ArrayList<UUID> playerList;
 	private ArrayList<Team> teams;
 	private Advancement root;
+	private int size;
 	
 	public AdvancementManagerInstance(String id)
 	{
@@ -32,7 +33,7 @@ public class AdvancementManagerInstance {
 		this.id = id;
 		makeRoot();
 	}
-	
+
 	public void addPlayer(Player player)
 	{
 		this.advManager.addPlayer(player);
@@ -170,5 +171,13 @@ public class AdvancementManagerInstance {
 		rootDisplay.setBackgroundTexture("textures/block/orange_concrete.png");
 		this.root = new Advancement(null, new NameKey(id, "root"), rootDisplay);
 		advManager.addAdvancement(root);
+	}
+	
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 }

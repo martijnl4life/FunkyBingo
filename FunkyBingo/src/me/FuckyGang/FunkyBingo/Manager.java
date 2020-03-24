@@ -44,6 +44,7 @@ public class Manager implements ManagerInterface
 	public boolean createCard(String id, int difficulty, int size)
 	{
 		this.managerList.put(id,new AdvancementManagerInstance(id) );
+		this.managerList.get(id).setSize(size);
 	
 		Collections.shuffle(this.holders);
 		

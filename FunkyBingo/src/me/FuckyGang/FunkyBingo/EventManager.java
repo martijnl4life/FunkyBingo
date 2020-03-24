@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
+import net.md_5.bungee.api.ChatColor;
 
 public class EventManager implements Listener
 {
@@ -111,6 +112,13 @@ public class EventManager implements Listener
 				for (int i = 0; i< players.size(); i++)
 				{
 					advance(players.get(i),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
+					int size = manager.getManager(namespace).getSize();
+					if (Bingo.checkBingo(players.get(i), 
+									manager.getManager(namespace).getAdvancementManager().getAdvancements(namespace).toArray(new Advancement[size * size + 1]),
+									size))
+					{
+						player.sendMessage(ChatColor.DARK_AQUA + "BITCH, BINGO");
+					}
 				}
 			}
 		}

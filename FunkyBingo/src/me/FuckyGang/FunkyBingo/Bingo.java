@@ -8,7 +8,13 @@ public class Bingo
 {
 	public static boolean checkBingo(Player player, Advancement[] card, int size)
 	{
-		return checkBingoHorizontal(player, card, size) || checkBingoVertical(player, card, size) || checkBingoDiagonal(player, card, size) || isCoverAll(player, card);
+		Advancement[] temp = new Advancement[size*size];
+		for (int i = 1; i < card.length; i++)
+		{
+			temp[i - 1] = card[i];
+		}
+		
+		return checkBingoHorizontal(player, temp, size) || checkBingoVertical(player, temp, size) || checkBingoDiagonal(player, temp, size) || isCoverAll(player, temp);
 	}
 	
 	public static boolean isCoverAll(Player player, Advancement[] card)
