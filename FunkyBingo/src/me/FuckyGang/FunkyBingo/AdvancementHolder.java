@@ -11,7 +11,7 @@ import eu.endercentral.crazy_advancements.AdvancementDisplay.AdvancementFrame;
 import eu.endercentral.crazy_advancements.AdvancementVisibility;
 import eu.endercentral.crazy_advancements.NameKey;
 
-public class AdvancementHolder
+public abstract class AdvancementHolder
 {
 	private int difficulty;
 	private String key;
@@ -24,27 +24,7 @@ public class AdvancementHolder
 	private AdvancementVisibility visibility = AdvancementVisibility.ALWAYS;
 	private EventType eventType;
 	
-	// advancement Specific Data -> differentiated through eventType
-	private Map<Material, Integer> materials;
-	
-	// eat
-	private Map<Material, Boolean> consumables;
-	
-
-
-	public AdvancementHolder(int difficulty, String key, Material icon, String title, String description, Map<Material, Boolean> consumables, EventType eventType)
-	{
-		this(difficulty, key, icon, title, description, consumables.size(), eventType);
-		this.consumables = consumables;
-	}
-	
-	public AdvancementHolder(int difficulty, String key, Material icon, String title, String description, EventType eventType, Map<Material, Integer> mapMaterials)
-	{
-		this(difficulty, key, icon, title, description, 1, eventType);
-		this.materials = mapMaterials;
-	}
-	
-	private AdvancementHolder(int difficulty, String key, Material icon, String title, String description, int criteria, EventType eventType)
+	protected AdvancementHolder(int difficulty, String key, Material icon, String title, String description, int criteria, EventType eventType)
 	{
 		this.advancementsContainer = new HashMap<String, Advancement>();
 		this.difficulty = difficulty;
@@ -54,8 +34,6 @@ public class AdvancementHolder
 		this.description = description;
 		this.criteria = criteria;
 		this.eventType = eventType;
-		this.materials = null;
-		this.consumables = null;
 	}
 	
 	public Advancement makeAdvancement(String namespace, Advancement parent, float x, float y)
@@ -114,16 +92,6 @@ public class AdvancementHolder
 	public EventType getEventType()
 	{
 		return eventType;
-	}
-	
-	public Map<Material, Integer> getMaterials() 
-	{
-		return materials;
-	}
-	
-	public Map<Material, Boolean> getConsumables() 
-	{
-		return consumables;
 	}
 
 }

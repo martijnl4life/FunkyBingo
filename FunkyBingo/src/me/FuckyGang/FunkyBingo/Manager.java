@@ -136,12 +136,12 @@ public class Manager implements ManagerInterface
 	
 	private void addInInventoryAdvancement(int difficulty, String key, Material icon, String title, String description, Map<Material, Integer> materials)
 	{
-		holders.add(new AdvancementHolder(0, key, icon, title, description,EventType.IN_INVENTORY, materials));
+		holders.add(new AdvancementHolderInInventory(0, key, icon, title, description,EventType.IN_INVENTORY, materials));
 	}
 	
-	private void addhasConsumedAdvancement(int difficulty, String key, Material icon, String title, String description, Map<Material, Boolean> consumables)
+	private void addhasConsumedAdvancement(int difficulty, String key, Material icon, String title, String description, Material... consumables)
 	{
-		holders.add(new AdvancementHolder(0, key, icon, title, description,consumables,EventType.HAS_CONSUMED));
+		holders.add(new AdvancementHolderConsumables(0, key, icon, title, description,EventType.HAS_CONSUMED,consumables));
 	}
 	
 
@@ -157,6 +157,7 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(0, "glisteringmelonslice", Material.GLISTERING_MELON_SLICE, "Watermelone", "Obtain 1 Glistering Melon Slice",  generateMap(Pair.of(Material.GLISTERING_MELON_SLICE, 1)));
 		addInInventoryAdvancement(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles",  generateMap(Pair.of(Material.SEA_PICKLE,32)));
 		addInInventoryAdvancement(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie",  generateMap(Pair.of(Material.COOKIE, 1)));
+		addhasConsumedAdvancement(0, "goldenparty", Material.GOLDEN_APPLE, "tastes better plated in gold", "eat 1 golden apple", Material.GOLDEN_APPLE);
 	}
 
 

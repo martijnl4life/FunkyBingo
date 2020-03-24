@@ -1,10 +1,12 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,19 +39,26 @@ public class EventManager implements Listener
 	{
 		for (AdvancementHolder ah : inInventory)
 		{
-			Map<Material, Integer> temp = ah.getMaterials();
-			boolean hasAllItems = true;
-			for (Map.Entry<Material, Integer> entry : temp.entrySet())
-			{
-				if(!event.getPlayer().getInventory().contains(entry.getKey(), entry.getValue()))
+			try {
+				Map<Material, Integer> temp = ((AdvancementHolderInInventory)ah).getMaterials();
+				boolean hasAllItems = true;
+				for (Map.Entry<Material, Integer> entry : temp.entrySet())
 				{
-					hasAllItems = false;
-					break;
+					if(!event.getPlayer().getInventory().contains(entry.getKey(), entry.getValue()))
+					{
+						hasAllItems = false;
+						break;
+					}
+				}
+				if (hasAllItems)
+				{
+					check((Player)event.getPlayer(),ah.getKey());
 				}
 			}
-			if (hasAllItems)
+			catch (Exception e)
 			{
-				check((Player)event.getPlayer(),ah.getKey());
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -57,6 +66,39 @@ public class EventManager implements Listener
 	@EventHandler
 	public void OnItemConsumeEvent(PlayerItemConsumeEvent event)
 	{
+		for (AdvancementHolder ah : itemConsumed)
+		{
+			try {
+				ArrayList<Material> temp = ((AdvancementHolderConsumables)ah).getConsumables();
+				ArrayList<Pair<UUID, Material>> consumed = ((AdvancementHolderConsumables)ah).getPlayersHaveConsumed();
+				
+				Bukkit.getLogger().log(Level.INFO,"Size of material array: " + temp.size() + " " + "Size of Pair array " + consumed.size() + "");
+				boolean hasConsumed = false;
+				for (Material material : temp)
+				{
+					if (event.getItem().getType().equals(material))
+					{
+						if(consumed.contains(Pair.of(event.getPlayer().getUniqueId(), material)))
+						{
+							hasConsumed = true;
+						}
+						{
+							((AdvancementHolderConsumables)ah).addPlayerConsumable(Pair.of(event.getPlayer().getUniqueId(), material));
+						}
+						break;
+					}
+				}
+				if (!hasConsumed)
+				{
+					check((Player)event.getPlayer(),ah.getKey());
+				}
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void check(Player player, String advancementKey)
