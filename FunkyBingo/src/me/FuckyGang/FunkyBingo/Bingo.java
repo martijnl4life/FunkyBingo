@@ -6,6 +6,15 @@ import eu.endercentral.crazy_advancements.Advancement;
 
 public class Bingo 
 {
+	/* 0 = no bingo
+ 	 * 1 = diagonal \
+	 * 2 = diagonal /
+	 * 0 + 2 + 1*i = row i
+	 * 0 + 2 + 1*i + size = coll i
+	 * coll i = row i + size
+	 * 
+	 * 0 + 2 + size + size = volle kaart
+	 * */
 	public static boolean checkBingo(Player player, Advancement[] card, int size)
 	{
 		Advancement[] temp = new Advancement[size*size];
