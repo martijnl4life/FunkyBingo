@@ -6,24 +6,14 @@ import eu.endercentral.crazy_advancements.Advancement;
 
 public class Bingo 
 {
-	
-	private Player player;
-	private Advancement[] advancements;
-	
-	public Bingo(Player player, Advancement[] card)
+	public static boolean checkBingo(Player player, Advancement[] card, int size)
 	{
-		this.player = player;
-		this.advancements = card;
+		return checkBingoHorizontal(player, card, size) || checkBingoVertical(player, card, size) || checkBingoDiagonal(player, card, size) || isCoverAll(player, card);
 	}
 	
-	public boolean checkBingo(Advancement[] card, int size)
+	public static boolean isCoverAll(Player player, Advancement[] card)
 	{
-		return checkBingoHorizontal(size) || checkBingoVertical(size) || checkBingoDiagonal(size) || isCoverAll();
-	}
-	
-	public boolean isCoverAll()
-	{
-		for (Advancement a : this.advancements)
+		for (Advancement a : card)
 		{
 			if (!a.isGranted(player))
 			{
@@ -33,16 +23,16 @@ public class Bingo
 		return true;
 	}
 
-	public boolean checkBingoHorizontal(int size)
+	private static boolean checkBingoHorizontal(Player player, Advancement[] card, int size)
 	{
-		for (int i = 0; i < advancements.length - 1; i += size)
+		for (int i = 0; i < card.length - 1; i += size)
 		{
-			if (advancements[i].isGranted(this.player))
+			if (card[i].isGranted(player))
 			{
 				boolean bingo = true;
 				for (int j = 0; j < size - 1; j++)
 				{
-					if (!advancements[i + j].isGranted(player))
+					if (!card[i + j].isGranted(player))
 					{
 						bingo = false;
 					}
@@ -56,16 +46,16 @@ public class Bingo
 		return false;
 	}
 	
-	public boolean checkBingoVertical(int size)
+	private static boolean checkBingoVertical(Player player, Advancement[] card, int size)
 	{
 		for (int i = 0; i < size - 1; i ++)
 		{
-			if(advancements[i].isGranted(this.player))
+			if(card[i].isGranted(player))
 			{
 				boolean bingo = true;
-				for (int j = 0; j < advancements.length - 1; j += size)
+				for (int j = 0; j < card.length - 1; j += size)
 				{
-					if (!advancements[i + j].isGranted(player))
+					if (!card[i + j].isGranted(player))
 					{
 						bingo = false;
 					}
@@ -79,13 +69,11 @@ public class Bingo
 		return false;
 	}
 
-	public boolean checkBingoDiagonal(int size)
+	private static boolean checkBingoDiagonal(Player player, Advancement[] card, int size)
 	{
-//		int[] i1 = {size*0 + 0, size*1 + 1, size*2 + 2}; diagonal: \
-//		int[] i2 = {size*1 - 1, size*2 - 2, size*3 - 3}; diagonal: /
 		for (int i = 0; i < size; i++)
 		{
-			if (!advancements[size * i + i].isGranted(player))
+			if (!card[size * i + i].isGranted(player))
 			{
 				break;
 			}
@@ -93,7 +81,7 @@ public class Bingo
 	
 		for (int i = 1; i < size + 1; i++)
 		{
-			if (!advancements[size * i - i].isGranted(player))
+			if (!card[size * i - i].isGranted(player))
 			{
 				return false;
 			}
