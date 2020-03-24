@@ -1,5 +1,6 @@
 package me.FuckyGang.FunkyBingo;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
@@ -11,4 +12,5 @@ public interface ManagerInterface {
 	public void removePlayer(String id, Player player);
 	public AdvancementManagerInstance getManager(String id);
 	public Set<String> getNamespaces();
+	public ArrayList<AdvancementHolder> getHolders(EventType event);
 }

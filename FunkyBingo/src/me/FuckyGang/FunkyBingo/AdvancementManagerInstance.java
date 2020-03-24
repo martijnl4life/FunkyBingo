@@ -139,7 +139,6 @@ public class AdvancementManagerInstance {
 			}
 		}
 		return false;
-		
 	}
 	
 	public boolean hasPlayerInListOrTeam(UUID playerId)

@@ -1,6 +1,8 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -8,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
@@ -16,52 +19,44 @@ public class EventManager implements Listener
 {
 	private ManagerInterface manager;
 	private Set<String> namespaces;
+	private ArrayList<AdvancementHolder> inInventory;
+	private ArrayList<AdvancementHolder> itemConsumed;
+	
 	
 	public EventManager(ManagerInterface manager)
 	{
 		this.manager = manager;
 		this.namespaces = manager.getNamespaces();
+		this.inInventory = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IN_INVENTORY));
+		this.itemConsumed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_CONSUMED));
+
 	}
 	
 	@EventHandler
-	public void onInventoryOpenEvent(InventoryCloseEvent event)
+	public void onInventoryCloseEvent(InventoryCloseEvent event)
 	{
-		if(event.getPlayer().getInventory().contains(Material.DIAMOND_BLOCK))
+		for (AdvancementHolder ah : inInventory)
 		{
-			check((Player)event.getPlayer(),"diamondblock");
+			Map<Material, Integer> temp = new HashMap<Material, Integer>(ah.getMaterials());
+			boolean hasAllItems = true;
+			for (Map.Entry<Material, Integer> entry : temp.entrySet())
+			{
+				if(!event.getPlayer().getInventory().contains(entry.getKey(), entry.getValue()))
+				{
+					hasAllItems = false;
+					break;
+				}
+			}
+			if (hasAllItems)
+			{
+				check((Player)event.getPlayer(),ah.getKey());
+			}
 		}
-		if(event.getPlayer().getInventory().contains(Material.BOOKSHELF))
-		{
-			check((Player)event.getPlayer(),"bookshelf");
-		}
-		if(event.getPlayer().getInventory().contains(Material.ENCHANTING_TABLE))
-		{
-			check((Player)event.getPlayer(),"enchantmenttable");
-		}
-		if(event.getPlayer().getInventory().contains(Material.END_CRYSTAL))
-		{
-			check((Player)event.getPlayer(),"endcrystal");
-		}
-		if(event.getPlayer().getInventory().contains(Material.EMERALD_BLOCK))
-		{
-			check((Player)event.getPlayer(),"emeraldblock");
-		}
-		if(event.getPlayer().getInventory().contains(Material.GLISTERING_MELON_SLICE))
-		{
-			check((Player)event.getPlayer(),"glisteringmelonslice");
-		}
-		if(event.getPlayer().getInventory().contains(Material.COOKIE))
-		{
-			check((Player)event.getPlayer(),"cookie");
-		}
-		if(event.getPlayer().getInventory().contains(Material.BRICK, 64))
-		{
-			check((Player)event.getPlayer(),"brick");
-		}
-		if(event.getPlayer().getInventory().contains(Material.SEA_PICKLE, 32))
-		{
-			check((Player)event.getPlayer(),"seapickle");
-		}
+	}
+	
+	@EventHandler
+	public void OnItemConsumeEvent(PlayerItemConsumeEvent event)
+	{
 	}
 	
 	private void check(Player player, String advancementKey)

@@ -98,31 +98,66 @@ public class Manager implements ManagerInterface
 		return this.managerList.get(id);
 	}
 	
+	public ArrayList<AdvancementHolder> getHolders(EventType event)
+	{
+		ArrayList<AdvancementHolder> temp = new ArrayList<AdvancementHolder>();
+		for (AdvancementHolder a : holders)
+		{
+			if (a.getEventType() == event)
+			{
+				temp.add(a);
+			}
+		}
+		return temp;
+	}
+	
 	private boolean isAdvancementInNamespace(AdvancementHolder holder, String id)
 	{
 		return holder.getAdvancement(id) != null;
 	}	
 	
-	private void initAdvancements()
-	{
-		addBingoTile(0, "diamondblock", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block", 1);
-		addBingoTile(0, "bookshelf", Material.BOOKSHELF, "Booked!", "Obtain 1 Bookshelf", 1);
-		addBingoTile(0, "enchantmenttable", Material.ENCHANTING_TABLE, "Time for some magic :O", "Obtain 1 Enchantment Table", 1);
-		addBingoTile(0, "endcrystal", Material.END_CRYSTAL, "End Crystal EZ CLAP", "Obtain 1 End Crystal", 1);
-		addBingoTile(0, "emeraldblock", Material.EMERALD_BLOCK, "For the Villager :)", "Obtain 1 Emerald Block", 1);
-		addBingoTile(0, "brick", Material.BRICK, "Just like Legos", "Obtain 64 bricks", 1);
-		addBingoTile(0, "glisteringmelonslice", Material.GLISTERING_MELON_SLICE, "Watermelone", "Obtain 1 Glistering Melon Slice", 1);
-		addBingoTile(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles", 1);
-		addBingoTile(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie", 1);
-	}
-	
-	private void addBingoTile(int difficulty, String key, Material icon, String title, String description, int criteria)
-	{
-		holders.add(new AdvancementHolder(0, key, icon, title, description, criteria));
-	}
-
 	@Override
 	public Set<String> getNamespaces() {
 		return managerList.keySet();
 	}
+	
+	@SafeVarargs
+	private static Map<Material, Integer> generateMap(Pair<Material, Integer>... materials)
+	{
+		Map<Material, Integer> temp = new HashMap<Material, Integer>();
+		for (Pair<Material, Integer> p  : materials)
+		{
+			temp.put(p.first, p.second);
+			p.clear();
+			p = null;
+		}
+		return temp;
+	}
+	
+	private void addInInventoryAdvancement(int difficulty, String key, Material icon, String title, String description, Map<Material, Integer> materials)
+	{
+		holders.add(new AdvancementHolder(0, key, icon, title, description,EventType.IN_INVENTORY, materials));
+	}
+	
+	private void addhasConsumedAdvancement(int difficulty, String key, Material icon, String title, String description, Map<Material, Boolean> consumables)
+	{
+		holders.add(new AdvancementHolder(0, key, icon, title, description,consumables,EventType.HAS_CONSUMED));
+	}
+	
+
+	
+	private void initAdvancements()
+	{
+		addInInventoryAdvancement(0, "diamondblock", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block",  generateMap(Pair.of(Material.DIAMOND_BLOCK, 1)));
+		addInInventoryAdvancement(0, "bookshelf", Material.BOOKSHELF, "Booked!", "Obtain 1 Bookshelf",  generateMap(Pair.of(Material.BOOKSHELF,1)));
+		addInInventoryAdvancement(0, "enchantmenttable", Material.ENCHANTING_TABLE, "Time for some magic :O", "Obtain 1 Enchantment Table",  generateMap(Pair.of(Material.ENCHANTING_TABLE, 1)));
+		addInInventoryAdvancement(0, "endcrystal", Material.END_CRYSTAL, "End Crystal EZ CLAP", "Obtain 1 End Crystal",  generateMap(Pair.of(Material.END_CRYSTAL, 1)));
+		addInInventoryAdvancement(0, "emeraldblock", Material.EMERALD_BLOCK, "For the Villager :)", "Obtain 1 Emerald Block",  generateMap(Pair.of(Material.EMERALD_BLOCK, 1)));
+		addInInventoryAdvancement(0, "brick", Material.BRICK, "Just like Legos", "Obtain 64 bricks",  generateMap(Pair.of(Material.BRICK, 64)));
+		addInInventoryAdvancement(0, "glisteringmelonslice", Material.GLISTERING_MELON_SLICE, "Watermelone", "Obtain 1 Glistering Melon Slice",  generateMap(Pair.of(Material.GLISTERING_MELON_SLICE, 1)));
+		addInInventoryAdvancement(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles",  generateMap(Pair.of(Material.SEA_PICKLE,32)));
+		addInInventoryAdvancement(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie",  generateMap(Pair.of(Material.COOKIE, 1)));
+	}
+
+
 }
