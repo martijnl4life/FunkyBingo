@@ -1,6 +1,7 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +25,8 @@ public class AdvancementManagerInstance {
 	private ArrayList<Team> teams;
 	private Advancement root;
 	private int size;
+	private ArrayList<Material> bingoMaterials;
+	private Iterator<Material> it;
 	
 	
 	public AdvancementManagerInstance(String id)
@@ -31,7 +34,12 @@ public class AdvancementManagerInstance {
 		this.advManager = CrazyAdvancements.getNewAdvancementManager();
 		this.playerList = new ArrayList<UUID>();
 		this.teams = new ArrayList<Team>();
+		this.bingoMaterials = new ArrayList<Material>();
+		addWools();
+		this.it = bingoMaterials.iterator();
 		this.id = id;
+		
+		
 		makeRoot();
 	}
 
@@ -46,12 +54,56 @@ public class AdvancementManagerInstance {
 		advManager.addAdvancement(adv);
 	}
 	
-	public void addBingoAdvancement(Advancement parent, String name, int x, int y)
+	public Advancement addBingoAdvancement(Advancement parent, String name, int x, int y)
 	{
-		AdvancementDisplay bingoDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.GOAL, false, false, AdvancementVisibility.ALWAYS);
+		AdvancementDisplay bingoDisplay = new AdvancementDisplay(nextWool(), name, "BINGOOOO" , AdvancementFrame.GOAL, false, false, AdvancementVisibility.ALWAYS);
 		Advancement bingo = new Advancement(parent, new NameKey(id, name), bingoDisplay);
 		bingo.getDisplay().setCoordinates(x, y);
 		advManager.addAdvancement(bingo);
+		return bingo;
+	}
+	
+	public void addBingos()
+	{
+		
+		Advancement prevAdv = null;
+		for (int y = 0; y <= size; y++)
+		{
+			for (int x = 0; x <= size; x++)
+			{
+				if (y == 0)
+				{
+					if (x == 0)
+					{
+						prevAdv = addBingoAdvancement(getRoot(), "bingo-row-"+ Integer.toString(x), x, y - 1);
+					}
+					else if (x == size)
+					{
+						prevAdv = addBingoAdvancement(prevAdv, "bingo-diagonal-up", x, y - 1);
+						prevAdv = addBingoAdvancement(prevAdv, "bingo-column-" + Integer.toString(y), x, y);
+					}
+					else
+					{
+						prevAdv = addBingoAdvancement(prevAdv, "bingo-row-"+ Integer.toString(x), x, y - 1);
+					}
+				}
+				else
+				{
+					if (x == size)
+					{
+						if (x == y)
+						{
+							prevAdv = addBingoAdvancement(prevAdv, "bingo-diagonal-down", x, y);
+						}
+						else
+						{
+							prevAdv = addBingoAdvancement(prevAdv, "bingo-column-" + Integer.toString(y), x, y);
+						}
+					}
+				}
+				
+			}
+		}
 	}
 	
 	public void removePlayer(Player player)
@@ -189,5 +241,38 @@ public class AdvancementManagerInstance {
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+	
+	public void addWools()
+	{
+		bingoMaterials.add(Material.PURPLE_WOOL);
+		bingoMaterials.add(Material.CYAN_WOOL);
+		bingoMaterials.add(Material.MAGENTA_WOOL);
+		bingoMaterials.add(Material.YELLOW_WOOL);
+		bingoMaterials.add(Material.BLUE_WOOL);
+		bingoMaterials.add(Material.BROWN_WOOL);
+		bingoMaterials.add(Material.ORANGE_WOOL);
+		bingoMaterials.add(Material.GRAY_WOOL);
+		bingoMaterials.add(Material.GREEN_WOOL);
+		bingoMaterials.add(Material.LIGHT_BLUE_WOOL);
+		bingoMaterials.add(Material.LIGHT_GRAY_WOOL);
+		bingoMaterials.add(Material.LIME_WOOL);
+		bingoMaterials.add(Material.PINK_WOOL);
+		bingoMaterials.add(Material.RED_WOOL);
+		bingoMaterials.add(Material.WHITE_WOOL);
+		bingoMaterials.add(Material.BLACK_WOOL);
+	}
+	
+	public Material nextWool()
+	{
+		if (it.hasNext())
+		{
+			return it.next();
+		}
+		else
+		{
+			this.it = bingoMaterials.iterator();
+			return nextWool();
+		}
 	}
 }
