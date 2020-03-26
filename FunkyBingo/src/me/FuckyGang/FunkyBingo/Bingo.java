@@ -19,7 +19,7 @@ public class Bingo
 	public static void checkBingo(Player player, Advancement[] card, int size, AdvancementManagerInstance am)
 	{
 		Advancement[] temp = new Advancement[size*size];
-		for (int i = 1; i < card.length; i++)
+		for (int i = 1; i < size * size + 1; i++)
 		{
 			temp[i - 1] = card[i];
 		}

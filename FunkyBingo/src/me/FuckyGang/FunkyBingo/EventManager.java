@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
@@ -140,6 +141,18 @@ public class EventManager implements Listener
 		}
 	}
 	
+	@EventHandler
+	public void onAdvancementGrant(PlayerAdvancementDoneEvent event)
+	{
+		for (String namespace : namespaces)
+		{
+			int size = manager.getManager(namespace).getSize();
+			Bingo.checkBingo(event.getPlayer(), 
+					manager.getManager(namespace).getAdvancementManager().getAdvancements(namespace).toArray(new Advancement[size * size + 1 + size + size + 2]),
+					size, manager.getManager(namespace));
+		}
+	}
+	
 	private void check(Player player, String advancementKey)
 	{
 		for (String namespace : namespaces)
@@ -150,13 +163,6 @@ public class EventManager implements Listener
 				for (int i = 0; i< players.size(); i++)
 				{
 					advance(players.get(i),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
-					int size = manager.getManager(namespace).getSize();
-					if (Bingo.checkBingo(players.get(i), 
-									manager.getManager(namespace).getAdvancementManager().getAdvancements(namespace).toArray(new Advancement[size * size + 1]),
-									size))
-					{
-						player.sendMessage(ChatColor.DARK_AQUA + "BITCH, BINGO");
-					}
 				}
 			}
 		}
