@@ -121,11 +121,11 @@ public class EventManager implements Listener
 					location.setWorld(event.getPlayer().getWorld());
 					Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
 					
-					if (location.getBlockX() == block.second.getBlockPos().getBlockX() && block.second.isImportantX()) 
+					if (location.getBlockX() == block.second.getBlockPos().getBlockX()) 
 					{
-						if (location.getBlockY() == block.second.getBlockPos().getBlockY() && block.second.isImportantY()) 
+						if (location.getBlockY() == block.second.getBlockPos().getBlockY()) 
 						{
-							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ() && block.second.isImportantZ()) 
+							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ()) 
 							{
 								check(event.getPlayer(),ah.getKey());
 							}
