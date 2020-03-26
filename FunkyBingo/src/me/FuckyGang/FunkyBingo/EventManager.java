@@ -123,10 +123,13 @@ public class EventManager implements Listener
 					
 					if (location.getBlockX() == block.second.getBlockPos().getBlockX() && block.second.isImportantX()) 
 					{
+						Bukkit.getLogger().log(Level.SEVERE, "locationX is gucci");
 						if (location.getBlockY() == block.second.getBlockPos().getBlockY() && block.second.isImportantY()) 
 						{
+							Bukkit.getLogger().log(Level.SEVERE, "locationY is gucci");
 							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ() && block.second.isImportantZ()) 
 							{
+								Bukkit.getLogger().log(Level.SEVERE, "locationZ is gucci");
 								check(event.getPlayer(),ah.getKey());
 							}
 						}
