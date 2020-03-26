@@ -25,6 +25,7 @@ public class AdvancementManagerInstance {
 	private Advancement root;
 	private int size;
 	
+	
 	public AdvancementManagerInstance(String id)
 	{
 		this.advManager = CrazyAdvancements.getNewAdvancementManager();
@@ -42,7 +43,15 @@ public class AdvancementManagerInstance {
 	
 	public void addAdvancement(Advancement... adv)
 	{
-		this.advManager.addAdvancement(adv);
+		advManager.addAdvancement(adv);
+	}
+	
+	public void addBingoAdvancement(Advancement parent, String name, int x, int y)
+	{
+		AdvancementDisplay bingoDisplay = new AdvancementDisplay(Material.BEDROCK, id, "Made possible by the Fucky Gang", AdvancementFrame.GOAL, false, false, AdvancementVisibility.ALWAYS);
+		Advancement bingo = new Advancement(parent, new NameKey(id, name), bingoDisplay);
+		bingo.getDisplay().setCoordinates(x, y);
+		advManager.addAdvancement(bingo);
 	}
 	
 	public void removePlayer(Player player)
@@ -164,6 +173,7 @@ public class AdvancementManagerInstance {
 		}
 		return false;
 	}
+	
 	
 	private void makeRoot()
 	{

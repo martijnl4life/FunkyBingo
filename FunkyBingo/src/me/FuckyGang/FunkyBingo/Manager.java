@@ -45,11 +45,15 @@ public class Manager implements ManagerInterface
 	{
 		this.managerList.put(id,new AdvancementManagerInstance(id) );
 		this.managerList.get(id).setSize(size);
+		
 	
 		Collections.shuffle(this.holders);
 		
 		getManager(id).getRoot().getDisplay().setCoordinates(-1, (float)((int)(size/2))); 
 
+		int rowCounter = 0;
+		int columnCounter = 0;
+		
 		for (int y = 0; y < size; y++ )
 		{
 			for (int x = 0; x < size; x++)
@@ -57,10 +61,34 @@ public class Manager implements ManagerInterface
 				if (x == 0)
 				{
 					holders.get(y * size + x).makeAdvancement(id, getManager(id).getRoot(), x, y);
+					if (y == 0)
+					{
+						getManager(id).addBingoAdvancement(holders.get(y * size + x).getAdvancement(id), "bingo-row-" + Integer.toString(rowCounter), x, y - 1);
+						rowCounter++;
+					}
 				}
 				else
 				{
 					holders.get(y * size + x).makeAdvancement(id, holders.get(y * size + x - 1).getAdvancement(id), x, y);
+					if (x == size - 1)
+					{
+						getManager(id).addBingoAdvancement(holders.get(y * size + x).getAdvancement(id), "bingo-column-" + Integer.toString(columnCounter), x + 1, y);
+						columnCounter++;
+						if (y == 0)
+						{
+							getManager(id).addBingoAdvancement(holders.get(y * size + x).getAdvancement(id), "bingo-diagonal-up", x + 1, y + 1);
+						}
+						if (y == size - 1)
+						{
+							getManager(id).addBingoAdvancement(holders.get(y * size + x).getAdvancement(id), "bingo-diagonal-down", x + 1, y + 1);
+						}
+						
+					}
+					if (y == 0)
+					{
+						getManager(id).addBingoAdvancement(holders.get(y * size + x).getAdvancement(id), "bingo-row-" + Integer.toString(rowCounter), x , y - 1);
+						rowCounter++;
+					}
 				}
 			}
 			
