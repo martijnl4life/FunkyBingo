@@ -127,11 +127,10 @@ public class EventManager implements Listener
 						{
 							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ() && block.second.isImportantZ()) 
 							{
-								
+								check(event.getPlayer(),ah.getKey());
 							}
 						}
 					}
-					check(event.getPlayer(),ah.getKey());
 				}
 			}
 			catch (Exception e)
