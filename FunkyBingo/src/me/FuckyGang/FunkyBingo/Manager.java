@@ -90,6 +90,10 @@ public class Manager implements ManagerInterface
 			{
 				if (isAdvancementInNamespace(holder, id))
 				{
+					if (holder instanceof AdvancementHolderConsumables)
+					{
+						((AdvancementHolderConsumables)holder).clear();
+					}
 					getManager(id).removeAdvancement(holder.getAdvancement(id));
 					holder.removeAdvancement(id);
 				}
@@ -97,6 +101,7 @@ public class Manager implements ManagerInterface
 		}
 		getManager(id).removeRoot();
 		getManager(id).removeAllPlayers();
+		getManager(id).removeRemainingAdvancements();
 		managerList.remove(id);
 	}
 	

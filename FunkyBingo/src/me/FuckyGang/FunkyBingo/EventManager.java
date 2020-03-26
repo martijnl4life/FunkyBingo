@@ -54,7 +54,7 @@ public class EventManager implements Listener
 						break;
 					}
 				}
-				if (hasAllItems)
+				if (hasAllItems && ah != null)
 				{
 					check((Player)event.getPlayer(),ah.getKey());
 				}
@@ -155,7 +155,12 @@ public class EventManager implements Listener
 				ArrayList<Player> players = manager.getManager(namespace).getTeamMembers(player);
 				for (int i = 0; i< players.size(); i++)
 				{
-					advance(players.get(i),namespace, manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey)));
+					Advancement adv = manager.getManager(namespace).getAdvancementManager().getAdvancement(generateNameKey(namespace, advancementKey));
+					if (adv != null)
+					{
+						advance(players.get(i),namespace, adv);
+					}
+					
 				}
 			}
 		}

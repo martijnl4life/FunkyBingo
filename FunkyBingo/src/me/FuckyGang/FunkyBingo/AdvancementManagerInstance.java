@@ -56,7 +56,7 @@ public class AdvancementManagerInstance {
 	
 	public Advancement addBingoAdvancement(Advancement parent, String name, int x, int y)
 	{
-		AdvancementDisplay bingoDisplay = new AdvancementDisplay(nextWool(), name, "BINGOOOO" , AdvancementFrame.GOAL, false, false, AdvancementVisibility.ALWAYS);
+		AdvancementDisplay bingoDisplay = new AdvancementDisplay(nextWool(), name, "BINGOOOO" , AdvancementFrame.CHALLENGE, true, true, AdvancementVisibility.ALWAYS);
 		Advancement bingo = new Advancement(parent, new NameKey(id, name), bingoDisplay);
 		bingo.getDisplay().setCoordinates(x, y);
 		advManager.addAdvancement(bingo);
@@ -243,7 +243,7 @@ public class AdvancementManagerInstance {
 		this.size = size;
 	}
 	
-	public void addWools()
+	private void addWools()
 	{
 		bingoMaterials.add(Material.PURPLE_WOOL);
 		bingoMaterials.add(Material.CYAN_WOOL);
@@ -263,7 +263,7 @@ public class AdvancementManagerInstance {
 		bingoMaterials.add(Material.BLACK_WOOL);
 	}
 	
-	public Material nextWool()
+	private Material nextWool()
 	{
 		if (it.hasNext())
 		{
@@ -273,6 +273,15 @@ public class AdvancementManagerInstance {
 		{
 			this.it = bingoMaterials.iterator();
 			return nextWool();
+		}
+	}
+	
+	public void removeRemainingAdvancements()
+	{
+		ArrayList<Advancement> adv = advManager.getAdvancements();
+		for (Advancement a : adv)
+		{
+			advManager.removeAdvancement(advManager.getAdvancement(a.getName()));
 		}
 	}
 }

@@ -36,4 +36,9 @@ public class AdvancementHolderConsumables extends AdvancementHolder
 			playersHaveConsumed.add(p);
 		}
 	}
+	
+	public void clear()
+	{
+		this.playersHaveConsumed.clear();
+	}
 }
