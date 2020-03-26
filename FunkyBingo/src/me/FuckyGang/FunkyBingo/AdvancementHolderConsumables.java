@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import org.bukkit.Material;
 
-public class AdvancementHolderConsumables extends AdvancementHolder {
+public class AdvancementHolderConsumables extends AdvancementHolder 
+{
 	private ArrayList<Material> consumables;
 	private ArrayList<Pair<UUID, Material>> playersHaveConsumed;
 	
@@ -18,7 +19,6 @@ public class AdvancementHolderConsumables extends AdvancementHolder {
 		{
 			this.consumables.add(m);
 		}
-		
 	}
 
 	public ArrayList<Material> getConsumables() {
