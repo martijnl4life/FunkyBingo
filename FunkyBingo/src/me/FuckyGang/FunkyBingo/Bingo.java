@@ -29,14 +29,14 @@ public class Bingo
 		checkBingoDiagonalDown(player,temp,size,am);
 	}
 
-	private static void checkBingoRow(Player player, Advancement[] card, int size, AdvancementManagerInstance am)
+	private static void checkBingoColumn(Player player, Advancement[] card, int size, AdvancementManagerInstance am)
 	{
 		for (int y = 0; y < size; y++)
 		{
 			boolean bingo = true;
 			for (int x = 0; x < size; x++)
 			{
-				if (!card[x + size * y].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-row-" + Integer.toString(y))).isGranted(player))
+				if (!card[x + size * y].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-column-" + Integer.toString(y))).isGranted(player))
 				{
 					bingo = false;
 					break;
@@ -44,19 +44,19 @@ public class Bingo
 			}
 			if (bingo)
 			{
-				am.getAdvancementManager().grantAdvancement(player, am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-row-" + Integer.toString(y))));
+				am.getAdvancementManager().grantAdvancement(player, am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-column-" + Integer.toString(y))));
 			}
 		}
 	}
 	
-	private static void checkBingoColumn(Player player, Advancement[] card, int size, AdvancementManagerInstance am)
+	private static void checkBingoRow(Player player, Advancement[] card, int size, AdvancementManagerInstance am)
 	{
 		for (int x = 0; x < size; x++)
 		{
 			boolean bingo = true;
 			for (int y = 0; y < size; y++)
 			{
-				if (!card[x + size * y].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-column-" + Integer.toString(x))).isGranted(player))
+				if (!card[x + size * y].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-row-" + Integer.toString(x))).isGranted(player))
 				{
 					bingo = false;
 					break;
@@ -64,7 +64,7 @@ public class Bingo
 			}
 			if (bingo)
 			{
-				am.getAdvancementManager().grantAdvancement(player, am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-column-" + Integer.toString(x))));
+				am.getAdvancementManager().grantAdvancement(player, am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-row-" + Integer.toString(x))));
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class Bingo
 	{
 		for (int i = 0; i < size; i++)
 		{
-			if (!card[size * i + i].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-diagonal-up")).isGranted(player))
+			if (!card[size * i + size - i - 1].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-diagonal-up")).isGranted(player))
 			{
 				return;
 			}
@@ -83,7 +83,7 @@ public class Bingo
 	
 	private static void checkBingoDiagonalDown(Player player, Advancement[] card, int size,AdvancementManagerInstance am)
 	{
-		for (int i = 1; i < size + 1; i++)
+		for (int i = 0; i < size; i++)
 		{
 			if (!card[size * i + i].isGranted(player) || am.getAdvancementManager().getAdvancement(new NameKey(am.getId(),"bingo-diagonal-down")).isGranted(player))
 			{

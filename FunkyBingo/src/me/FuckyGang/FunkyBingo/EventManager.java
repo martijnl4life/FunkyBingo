@@ -87,13 +87,14 @@ public class EventManager implements Listener
 						{
 							hasConsumed = true;
 						}
+						else 
 						{
 							((AdvancementHolderConsumables)ah).addPlayerConsumable(Pair.of(event.getPlayer().getUniqueId(), material));
 						}
 						break;
 					}
 				}
-				if (!hasConsumed)
+				if (!hasConsumed && consumed.contains(Pair.of(event.getPlayer().getUniqueId(), event.getItem().getType())))
 				{
 					check((Player)event.getPlayer(),ah.getKey());
 				}
@@ -126,10 +127,11 @@ public class EventManager implements Listener
 						{
 							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ() && block.second.isImportantZ()) 
 							{
-								check(event.getPlayer(),ah.getKey());
+								
 							}
 						}
 					}
+					check(event.getPlayer(),ah.getKey());
 				}
 			}
 			catch (Exception e)
@@ -140,17 +142,6 @@ public class EventManager implements Listener
 		}
 	}
 	
-	@EventHandler
-	public void onAdvancementGrant(PlayerAdvancementDoneEvent event)
-	{
-		for (String namespace : namespaces)
-		{
-			int size = manager.getManager(namespace).getSize();
-			Bingo.checkBingo(event.getPlayer(), 
-					manager.getManager(namespace).getAdvancementManager().getAdvancements(namespace).toArray(new Advancement[size * size + 1 + size + size + 2]),
-					size, manager.getManager(namespace));
-		}
-	}
 	
 	private void check(Player player, String advancementKey)
 	{
@@ -174,10 +165,23 @@ public class EventManager implements Listener
 		{
 			manager.getManager(namespace).getAdvancementManager().setCriteriaProgress(player, advancement, progress + 1);
 		}
+		onBingoGrantEvent(player);
 	}
 	
 	private NameKey generateNameKey(String namespace, String key)
 	{
 		return new NameKey(namespace, key);
 	}
+	
+	public void onBingoGrantEvent(Player player)
+	{
+		for (String namespace : namespaces)
+		{
+			int size = manager.getManager(namespace).getSize();
+			Bingo.checkBingo(player, 
+					manager.getManager(namespace).getAdvancementManager().getAdvancements(namespace).toArray(new Advancement[size * size + 1 + size + size + 2]),
+					size, manager.getManager(namespace));
+		}
+	}
+	
 }
