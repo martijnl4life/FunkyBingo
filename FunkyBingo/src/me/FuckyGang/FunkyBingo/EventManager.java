@@ -113,7 +113,7 @@ public class EventManager implements Listener
 		{
 			try
 			{
-				Pair<Material, Position> block = ((AdvancementHolderPlaceBlock)ah).getBlock();
+				Pair<Material, Location> block = ((AdvancementHolderPlaceBlock)ah).getBlock();
 				
 				if (event.getBlock().getType() == block.first)
 				{
@@ -121,13 +121,13 @@ public class EventManager implements Listener
 					location.setWorld(event.getPlayer().getWorld());
 					Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
 					
-					if (location.getBlockX() == block.second.getBlockPos().getBlockX()) 
+					if (location.getBlockX() == block.second.getBlockX()) 
 					{
 						Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol X");
-						if (location.getBlockY() == block.second.getBlockPos().getBlockY()) 
+						if (location.getBlockY() == block.second.getBlockY()) 
 						{
 							Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Y");
-							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ()) 
+							if (location.getBlockZ() == block.second.getBlockZ()) 
 							{
 								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Z");
 								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol");

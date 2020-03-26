@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -150,7 +151,7 @@ public class Manager implements ManagerInterface
 		holders.add(new AdvancementHolderConsumables(0, key, icon, title, description,EventType.HAS_CONSUMED,consumables));
 	}
 	
-	private void addPlacedBlockAdvancement(int difficulty, String key, Material icon, String title, String description, Pair<Material, Position> block)
+	private void addPlacedBlockAdvancement(int difficulty, String key, Material icon, String title, String description, Pair<Material, Location> block)
 	{
 		holders.add(new AdvancementHolderPlaceBlock(0, key, icon, title, description, EventType.BLOCK_PLACED, block));
 	}
@@ -167,6 +168,6 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(0, "seapickle", Material.SEA_PICKLE, "I'M PICKLE RICK!!!", "Obtain 32 sea pickles",  generateMap(Pair.of(Material.SEA_PICKLE,32)));
 		addInInventoryAdvancement(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie",  generateMap(Pair.of(Material.COOKIE, 1)));
 		addhasConsumedAdvancement(0, "goldenparty", Material.GOLDEN_APPLE, "tastes better plated in gold", "eat 1 golden apple", Material.GOLDEN_APPLE);
-		addPlacedBlockAdvancement(0, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale on y=256", Pair.of(Material.HAY_BLOCK, new Position(null, "0", "255", "0")));
+		addPlacedBlockAdvancement(0, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale on y=256", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
 	}
 }
