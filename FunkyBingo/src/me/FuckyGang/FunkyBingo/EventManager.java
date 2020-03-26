@@ -123,10 +123,14 @@ public class EventManager implements Listener
 					
 					if (location.getBlockX() == block.second.getBlockPos().getBlockX()) 
 					{
+						Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol X");
 						if (location.getBlockY() == block.second.getBlockPos().getBlockY()) 
 						{
+							Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Y");
 							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ()) 
 							{
+								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Z");
+								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol");
 								check(event.getPlayer(),ah.getKey());
 							}
 						}
