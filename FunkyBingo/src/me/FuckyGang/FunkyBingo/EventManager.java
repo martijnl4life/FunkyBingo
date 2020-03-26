@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
-import net.md_5.bungee.api.ChatColor;
 
 public class EventManager implements Listener
 {
