@@ -119,16 +119,14 @@ public class EventManager implements Listener
 				{
 					Location location = event.getBlock().getLocation();
 					location.setWorld(event.getPlayer().getWorld());
+					Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("Location: " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
 					
 					if (location.getBlockX() == block.second.getBlockPos().getBlockX() && block.second.isImportantX()) 
 					{
-						Bukkit.getLogger().log(Level.SEVERE, "locationX is gucci");
 						if (location.getBlockY() == block.second.getBlockPos().getBlockY() && block.second.isImportantY()) 
 						{
-							Bukkit.getLogger().log(Level.SEVERE, "locationX is gucci");
 							if (location.getBlockZ() == block.second.getBlockPos().getBlockZ() && block.second.isImportantZ()) 
 							{
-								Bukkit.getLogger().log(Level.SEVERE, "locationX is gucci");
 								check(event.getPlayer(),ah.getKey());
 							}
 						}
