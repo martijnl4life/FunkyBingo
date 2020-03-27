@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class Manager implements ManagerInterface
@@ -148,17 +149,22 @@ public class Manager implements ManagerInterface
 	
 	private void addInInventoryAdvancement(int difficulty, String key, Material icon, String title, String description, Map<Material, Integer> materials)
 	{
-		holders.add(new AdvancementHolderInInventory(0, key, icon, title, description,EventType.IN_INVENTORY, materials));
+		holders.add(new AdvancementHolderInInventory(difficulty, key, icon, title, description,EventType.IN_INVENTORY, materials));
 	}
 	
 	private void addhasConsumedAdvancement(int difficulty, String key, Material icon, String title, String description, Material... consumables)
 	{
-		holders.add(new AdvancementHolderConsumables(0, key, icon, title, description,EventType.HAS_CONSUMED,consumables));
+		holders.add(new AdvancementHolderConsumables(difficulty, key, icon, title, description,EventType.HAS_CONSUMED,consumables));
 	}
 	
 	private void addPlacedBlockAdvancement(int difficulty, String key, Material icon, String title, String description, Pair<Material, Location> block)
 	{
-		holders.add(new AdvancementHolderPlaceBlock(0, key, icon, title, description, EventType.BLOCK_PLACED, block));
+		holders.add(new AdvancementHolderPlaceBlock(difficulty, key, icon, title, description, EventType.BLOCK_PLACED, block));
+	}
+	
+	private void addKillsEntityAdvancement(int difficulty, String key, Material icon, String title, String description, EntityType entity)
+	{
+		holders.add(new AdvancementHolderKillEntity(difficulty, key, icon, title, description, EventType.KILLED_ENTITY, entity));
 	}
 	
 	private void initAdvancements()
@@ -174,5 +180,6 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(0, "cookie", Material.COOKIE, "Just get 1 Cookie :)", "Obtain 1 Cookie",  generateMap(Pair.of(Material.COOKIE, 1)));
 		addhasConsumedAdvancement(0, "goldenparty", Material.GOLDEN_APPLE, "tastes better plated in gold", "eat 1 golden apple", Material.GOLDEN_APPLE);
 		addPlacedBlockAdvancement(0, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale on y=256", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
+		addKillsEntityAdvancement(0, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
 	}
 }

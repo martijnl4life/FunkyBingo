@@ -9,15 +9,18 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
+import net.minecraft.server.v1_15_R1.EntityPlayer;
 
 public class EventManager implements Listener
 {
@@ -26,6 +29,7 @@ public class EventManager implements Listener
 	private ArrayList<AdvancementHolder> inInventory;
 	private ArrayList<AdvancementHolder> itemConsumed;
 	private ArrayList<AdvancementHolder> blockPlaced;
+	private ArrayList<AdvancementHolder> killedEntity;
 	
 	
 	public EventManager(ManagerInterface manager)
@@ -35,6 +39,7 @@ public class EventManager implements Listener
 		this.inInventory = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IN_INVENTORY));
 		this.itemConsumed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_CONSUMED));
 		this.blockPlaced = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.BLOCK_PLACED));
+		this.killedEntity = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.KILLED_ENTITY));
 
 	}
 	
@@ -123,14 +128,10 @@ public class EventManager implements Listener
 					
 					if (location.getBlockX() == block.second.getBlockX()) 
 					{
-						Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol X");
 						if (location.getBlockY() == block.second.getBlockY()) 
 						{
-							Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Y");
 							if (location.getBlockZ() == block.second.getBlockZ()) 
 							{
-								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol Z");
-								Bukkit.getPlayer(event.getPlayer().getUniqueId()).sendMessage("you suck lol");
 								check(event.getPlayer(),ah.getKey());
 							}
 						}
@@ -145,6 +146,31 @@ public class EventManager implements Listener
 		}
 	}
 	
+	@EventHandler
+	public void onEntityKilledEvent(EntityDamageByEntityEvent event)
+	{
+		for (AdvancementHolder ah : this.killedEntity)
+		{
+			try
+			{
+				EntityType entity = ((AdvancementHolderKillEntity) ah).getEntity();
+				
+				if (event.getDamager().getType().equals(EntityType.PLAYER))
+				{
+					Player player = (Player)event.getDamager();
+					if (event.getEntity().getType().equals(entity))
+					{
+						check(player, ah.getKey());
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	private void check(Player player, String advancementKey)
 	{
