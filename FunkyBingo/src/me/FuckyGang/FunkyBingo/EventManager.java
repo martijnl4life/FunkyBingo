@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
@@ -29,17 +30,31 @@ public class EventManager implements Listener
 	private ArrayList<AdvancementHolder> itemConsumed;
 	private ArrayList<AdvancementHolder> blockPlaced;
 	private ArrayList<AdvancementHolder> killedEntity;
+	private ArrayList<AdvancementHolder> itemCrafted;
+	private ArrayList<AdvancementHolder> itemBrewed;
+	private ArrayList<AdvancementHolder> hasDied;
+	private ArrayList<AdvancementHolder> isSomewhere;
+	private ArrayList<AdvancementHolder> isRiding;
+	private ArrayList<AdvancementHolder> itemUsed;
+	private ArrayList<AdvancementHolder> hasBred;
 	
 	
 	public EventManager(ManagerInterface manager)
 	{
 		this.manager = manager;
 		this.namespaces = manager.getNamespaces();
+		
 		this.inInventory = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IN_INVENTORY));
 		this.itemConsumed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_CONSUMED));
 		this.blockPlaced = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.BLOCK_PLACED));
 		this.killedEntity = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.KILLED_ENTITY));
-
+		this.itemCrafted = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_CRAFTED));
+		this.itemBrewed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_BREWED));
+		this.hasDied = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_DIED));
+		this.isSomewhere = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_SOMEWHERE));
+		this.isRiding = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_SOMEWHERE));
+		this.itemUsed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_USED));
+		this.hasBred = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_BRED));
 	}
 	
 	@EventHandler
@@ -163,6 +178,46 @@ public class EventManager implements Listener
 				{
 					check(player, ah.getKey());
 				}
+
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@EventHandler
+	private void onCraftItemEvent(CraftItemEvent event)
+	{
+		for (AdvancementHolder ah : this.itemCrafted)
+		{
+			try
+			{
+				Material item = ((AdvancementHolderCraft)ah).getMaterial();
+				
+				Player player = (Player)event.getWhoClicked();
+				if (event.getInventory().getResult().getType() == item)
+				{
+					check(player, ah.getKey());
+				}
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@EventHandler
+	private void onPlayerDeathEvent(EntityDeathEvent event)
+	{
+		for (AdvancementHolder ah : this.hasDied)
+		{
+			try
+			{
 
 			}
 			catch (Exception e)
