@@ -10,5 +10,6 @@ public enum EventType {
 	HAS_DIED,
 	IS_SOMEWHERE,
 	IS_RIDING,
-	HAS_USED
+	HAS_USED,
+	HAS_BRED
 }

@@ -10,7 +10,6 @@ public class AdvancementHolderCraft extends AdvancementHolder {
 			 Material material) {
 		super(difficulty, key, icon, title, description, 1, EventType.HAS_CRAFTED);
 		this.material = material;
-		// TODO Auto-generated constructor stub
 		
 	}
 	
