@@ -9,6 +9,7 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class Manager implements ManagerInterface
@@ -167,6 +168,18 @@ public class Manager implements ManagerInterface
 		holders.add(new AdvancementHolderKillEntity(difficulty, key, icon, title, description, EventType.KILLED_ENTITY, entity));
 	}
 	
+	private void addPlayerCraftAdvancement(int difficulty, String key, Material icon, String title, String description, Material material)
+	{
+		holders.add(new AdvancementHolderCraft(difficulty, key, icon, title, description, material));
+	}
+	
+	private void addPlayerDeathAdvancement(int difficulty, String key, Material icon, String title, String description, EntityType entityType)
+	{
+		holders.add(new AdvancementHolderDeathBy(difficulty, key, icon, title, description, entityType));
+	}
+	
+
+	
 	private void initAdvancements()
 	{
 		addInInventoryAdvancement(0, "diamondblock", Material.DIAMOND_BLOCK, "9 Diamonds Pogu", "Obtain 1 Diamond Block",  generateMap(Pair.of(Material.DIAMOND_BLOCK, 1)));
@@ -181,5 +194,7 @@ public class Manager implements ManagerInterface
 		addhasConsumedAdvancement(0, "goldenparty", Material.GOLDEN_APPLE, "tastes better plated in gold", "eat 1 golden apple", Material.GOLDEN_APPLE);
 		addPlacedBlockAdvancement(0, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale on y=256", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
 		addKillsEntityAdvancement(0, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
+		addPlayerDeathAdvancement(0, "enderkill", Material.ENDERMITE_SPAWN_EGG, "Revenge of the ENDER", "Get killed by an Enderman", EntityType.ENDERMAN);
+		addPlayerCraftAdvancement(0, "beacon", Material.NETHER_STAR, "Ultimate Flex", "Craft a Beacon", Material.BEACON);
 	}
 }

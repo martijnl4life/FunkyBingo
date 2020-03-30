@@ -221,7 +221,7 @@ public class EventManager implements Listener
 		{
 			try
 			{
-				LivingEntity entity = ((AdvancementHolderDeathBy)ah).getLivingEntity();
+				EntityType entity = ((AdvancementHolderDeathBy)ah).getEntityType();
 				
 				Player player = event.getEntity();
 				
@@ -232,7 +232,7 @@ public class EventManager implements Listener
 					{
 						LivingEntity damager = (LivingEntity)e.getDamager();
 						
-						if(damager.getType().equals(entity.getType()))
+						if(damager.getType().equals(entity))
 						{
 							check(player, ah.getKey());
 						}
