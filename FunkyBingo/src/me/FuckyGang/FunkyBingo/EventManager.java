@@ -10,11 +10,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -212,13 +215,29 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
-	private void onPlayerDeathEvent(EntityDeathEvent event)
+	private void onPlayerDeathEvent(PlayerDeathEvent event)
 	{
 		for (AdvancementHolder ah : this.hasDied)
 		{
 			try
 			{
-
+				LivingEntity entity = ((AdvancementHolderDeathBy)ah).getLivingEntity();
+				
+				Player player = event.getEntity();
+				
+				if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent)
+				{
+					EntityDamageByEntityEvent e = (EntityDamageByEntityEvent)player.getLastDamageCause();
+					if (e.getDamager() instanceof LivingEntity)
+					{
+						LivingEntity damager = (LivingEntity)e.getDamager();
+						
+						if(damager.getType().equals(entity.getType()))
+						{
+							check(player, ah.getKey());
+						}
+					}
+				}
 			}
 			catch (Exception e)
 			{
