@@ -14,13 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
 
 public class EventManager implements Listener
 {
@@ -147,22 +146,24 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
-	public void onEntityKilledEvent(EntityDamageByEntityEvent event)
+	public void onEntityKilledEvent(EntityDeathEvent event)
 	{
+		if (event.getEntity().getKiller() == null)
+		{
+			return;
+		}
 		for (AdvancementHolder ah : this.killedEntity)
 		{
 			try
 			{
 				EntityType entity = ((AdvancementHolderKillEntity) ah).getEntity();
-				
-				if (event.getDamager().getType().equals(EntityType.PLAYER))
+
+				Player player = event.getEntity().getKiller();
+				if (event.getEntity().getType().equals(entity))
 				{
-					Player player = (Player)event.getDamager();
-					if (event.getEntity().getType().equals(entity))
-					{
-						check(player, ah.getKey());
-					}
+					check(player, ah.getKey());
 				}
+
 			}
 			catch (Exception e)
 			{
