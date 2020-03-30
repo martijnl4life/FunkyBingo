@@ -1,13 +1,20 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 
 public class AdvancementHolderDeathBy extends AdvancementHolder {
-
+	
+	private LivingEntity livingEntity;
+	
 	protected AdvancementHolderDeathBy(int difficulty, String key, Material icon, String title, String description,
-			 EventType eventType) {
-		super(difficulty, key, icon, title, description, 1, eventType);
-		// TODO Auto-generated constructor stub
+			 LivingEntity livingEntity) {
+		super(difficulty, key, icon, title, description, 1, EventType.HAS_DIED);
+		this.livingEntity = livingEntity;
 	}
 
+	public LivingEntity getLivingEntity()
+	{
+		return livingEntity;
+	}
 }
