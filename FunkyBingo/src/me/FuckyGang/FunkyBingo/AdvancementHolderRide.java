@@ -2,20 +2,21 @@ package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 
 public class AdvancementHolderRide extends AdvancementHolder {
 
-	private Entity entity;
+	private EntityType entityType;
 	
 	protected AdvancementHolderRide(int difficulty, String key, Material icon, String title, String description,
-			 Entity entity) {
+			 EntityType entityType) {
 		super(difficulty, key, icon, title, description, 1, EventType.IS_RIDING);
-		this.entity = entity;
+		this.entityType = entityType;
 	}
 	
-	public Entity getEntity()
+	public EntityType getEntityType()
 	{
-		return entity;
+		return entityType;
 	}
 
 }

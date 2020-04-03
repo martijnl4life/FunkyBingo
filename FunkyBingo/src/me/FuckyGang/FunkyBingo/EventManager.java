@@ -26,6 +26,7 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
@@ -69,9 +70,35 @@ public class EventManager implements Listener
 	}
 	
 	@EventHandler
+	public void onEntityMountEvent(VehicleMoveEvent event)
+	{
+		for (AdvancementHolder ah : this.isRiding)
+		{
+			try {
+				EntityType entityType = ((AdvancementHolderRide)ah).getEntityType();
+				if (((Entity)event.getVehicle()).getType() == entityType)
+				{
+					for (Entity e : event.getVehicle().getPassengers())
+					{
+						if (e instanceof Player)
+						{
+							check((Player)e, ah.getKey());
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@EventHandler
 	public void onEntityBreedEvent(EntityBreedEvent event)
 	{
-		for (AdvancementHolder ah : this.inInventory)
+		for (AdvancementHolder ah : this.hasBred)
 		{
 			try {
 				Animals animal = ((AdvancementHolderBreed)ah).getAnimals();
@@ -91,7 +118,7 @@ public class EventManager implements Listener
 	@EventHandler
 	public void onPotionBrewEvent(BrewEvent event)
 	{
-		for (AdvancementHolder ah : this.inInventory)
+		for (AdvancementHolder ah : this.itemBrewed)
 		{
 			try {
 				PotionType potionType = ((AdvancementHolderBrew)ah).getPotionType();
