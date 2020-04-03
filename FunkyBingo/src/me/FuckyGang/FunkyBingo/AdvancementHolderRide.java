@@ -1,7 +1,6 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 public class AdvancementHolderRide extends AdvancementHolder {
