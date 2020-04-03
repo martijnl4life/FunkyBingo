@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionType;
 
 public class Manager implements ManagerInterface
 {
@@ -230,6 +231,11 @@ public class Manager implements ManagerInterface
 	private void addEntityBreedAdvancement(int difficulty, String key, Material icon, String title, String description, Animals animals)
 	{
 		holders.add(new AdvancementHolderBreed(difficulty, key, icon, title, description, animals));
+	}
+	
+	private void addBrewsPotionAdvancement(int difficulty, String key, Material icon, String title, String description, PotionType potionType)
+	{
+		holders.add(new AdvancementHolderBrew(difficulty, key, icon, title, description, potionType));
 	}
 	
 	private void initAdvancements()
