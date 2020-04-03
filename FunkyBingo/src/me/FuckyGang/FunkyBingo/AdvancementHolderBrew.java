@@ -1,19 +1,20 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.Material;
+import org.bukkit.potion.PotionType;
 
 public class AdvancementHolderBrew extends AdvancementHolder {
 
-	private Material material;
+	private PotionType potionType;
 	
 	protected AdvancementHolderBrew(int difficulty, String key, Material icon, String title, String description,
-			 Material material) {
+			 PotionType potionType) {
 		super(difficulty, key, icon, title, description, 1, EventType.HAS_BREWED);
-		this.material = material;
+		this.potionType = potionType;
 	}
 
-	public Material getMaterial() 
+	public PotionType getPotionType() 
 	{
-		return material;
+		return potionType;
 	}
 }

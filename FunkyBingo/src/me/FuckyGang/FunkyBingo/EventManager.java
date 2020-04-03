@@ -1,6 +1,7 @@
 package me.FuckyGang.FunkyBingo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -9,18 +10,25 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 import eu.endercentral.crazy_advancements.Advancement;
 import eu.endercentral.crazy_advancements.NameKey;
@@ -58,6 +66,63 @@ public class EventManager implements Listener
 		this.isRiding = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_SOMEWHERE));
 		this.itemUsed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_USED));
 		this.hasBred = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_BRED));
+	}
+	
+	@EventHandler
+	public void onEntityBreedEvent(EntityBreedEvent event)
+	{
+		for (AdvancementHolder ah : this.inInventory)
+		{
+			try {
+				Animals animal = ((AdvancementHolderBreed)ah).getAnimals();
+				if (animal == (Animals)event.getEntity())
+				{
+					check((Player)event.getBreeder(), ah.getKey());
+				}
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPotionBrewEvent(BrewEvent event)
+	{
+		for (AdvancementHolder ah : this.inInventory)
+		{
+			try {
+				PotionType potionType = ((AdvancementHolderBrew)ah).getPotionType();
+				ItemStack[] itemStackArrayBrewingStand = event.getContents().getStorageContents();
+				for (ItemStack is : itemStackArrayBrewingStand)
+				{
+					if (is.getItemMeta() instanceof PotionMeta)
+					{
+						PotionMeta meta = (PotionMeta)is.getItemMeta();
+						if (meta.getBasePotionData().getType() == potionType)
+						{
+							Iterator<Entity> it = event.getBlock().getWorld().getNearbyEntities(event.getBlock().getBoundingBox().expand(7)).iterator();
+							while (it.hasNext())
+							{
+								Entity entity = it.next();
+								if (entity instanceof Player)
+								{
+									check((Player)entity, ah.getKey());
+								}
+							}
+						}
+					}
+				}
+				
+			}
+			catch (Exception e)
+			{
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@EventHandler
