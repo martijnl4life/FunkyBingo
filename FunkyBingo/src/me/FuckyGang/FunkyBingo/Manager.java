@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -221,7 +222,15 @@ public class Manager implements ManagerInterface
 		holders.add(new AdvancementHolderDeathBy(difficulty, key, icon, title, description, entityType));
 	}
 	
-
+	private void addEntityMountAdvancement(int difficulty, String key, Material icon, String title, String description, EntityType entityType)
+	{
+		holders.add(new AdvancementHolderRide(difficulty, key, icon, title, description, entityType));
+	}
+	
+	private void addEntityBreedAdvancement(int difficulty, String key, Material icon, String title, String description, Animals animals)
+	{
+		holders.add(new AdvancementHolderBreed(difficulty, key, icon, title, description, animals));
+	}
 	
 	private void initAdvancements()
 	{
@@ -292,7 +301,8 @@ public class Manager implements ManagerInterface
 		addhasConsumedAdvancement(-1, "rabbitstew", Material.RABBIT_STEW, "Overcomplicated Eating", "Eat a RabbitStew", Material.CLOCK);
 		addhasConsumedAdvancement(-1, "milk", Material.MILK_BUCKET, "Milky time!", "Drink a bucket of Milk", Material.MILK_BUCKET);
 
-		addPlacedBlockAdvancement(-1, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale on y=256", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
+		addPlacedBlockAdvancement(-1, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale at 0 255 0", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
 		addKillsEntityAdvancement(-1, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
+		//65 
 	}
 }
