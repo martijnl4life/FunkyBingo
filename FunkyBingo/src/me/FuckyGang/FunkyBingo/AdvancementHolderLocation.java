@@ -17,5 +17,4 @@ public class AdvancementHolderLocation extends AdvancementHolder {
 	{
 		return structureType;
 	}
-
 }

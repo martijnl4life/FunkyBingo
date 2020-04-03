@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -48,8 +50,24 @@ public class Manager implements ManagerInterface
 		this.managerList.put(id,new AdvancementManagerInstance(id) );
 		this.managerList.get(id).setSize(size);
 		
+		ArrayList<AdvancementHolder> ahaDifficulties = new ArrayList<AdvancementHolder>();
+		ArrayList<Integer> difficulties = new ArrayList<Integer>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		difficulties.add(difficulty);
+		if (!hasEnoughAdvancements(difficulties, indices, size))
+		{
+			Bukkit.getLogger().log(Level.WARNING, "There are not enough advancements present to fill this card [abort]");
+			return false;
+		}
+
+		ahaDifficulties.ensureCapacity(indices.size());
+		for (int i : indices)
+		{
+			ahaDifficulties.add(holders.get(i));
+		}
+		
 	
-		Collections.shuffle(this.holders);
+		Collections.shuffle(ahaDifficulties);
 		
 		getManager(id).getRoot().getDisplay().setCoordinates(-1, (float)((int)(size/2))); 
 		
@@ -59,12 +77,12 @@ public class Manager implements ManagerInterface
 			{
 				if (x == 0)
 				{
-					holders.get(y * size + x).makeAdvancement(id, getManager(id).getRoot(), x, y);
+					ahaDifficulties.get(y * size + x).makeAdvancement(id, getManager(id).getRoot(), x, y);
 
 				}
 				else
 				{
-					holders.get(y * size + x).makeAdvancement(id, holders.get(y * size + x - 1).getAdvancement(id), x, y);
+					ahaDifficulties.get(y * size + x).makeAdvancement(id, holders.get(y * size + x - 1).getAdvancement(id), x, y);
 				}
 			}
 			
@@ -132,6 +150,32 @@ public class Manager implements ManagerInterface
 	@Override
 	public Set<String> getNamespaces() {
 		return managerList.keySet();
+	}
+	
+	public boolean hasEnoughAdvancements(ArrayList<Integer> difficulties, ArrayList<Integer> indices,int size)
+	{
+		boolean hasZero = false;
+		if (difficulties.contains(0))
+		{
+			hasZero = true;
+			indices.ensureCapacity(holders.size());
+		}
+		else
+		{
+			indices.ensureCapacity(size * size);
+		}
+		
+		
+		int cAdvancementsPresent = 0;
+		for (AdvancementHolder ah : holders)
+		{
+			if (difficulties.contains(ah.getDifficluty()) || hasZero)
+			{
+				cAdvancementsPresent++;
+				indices.add(holders.indexOf(ah));
+			}
+		}
+		return cAdvancementsPresent >= size;
 	}
 	
 	@SafeVarargs
