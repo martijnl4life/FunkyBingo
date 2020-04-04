@@ -255,7 +255,7 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(-1, "undyingtotem", Material.TOTEM_OF_UNDYING, "Shiny totem", "Obtain 1 Totem of Undying", generateMap(Pair.of(Material.TOTEM_OF_UNDYING, 1)));
 		addInInventoryAdvancement(-1, "witherskull", Material.WITHER_SKELETON_SKULL, "RNGesus", "Obtain 1 Wither Skeleton Skull", generateMap(Pair.of(Material.WITHER_SKELETON_SKULL, 1)));
 		addInInventoryAdvancement(-1, "cobblestone", Material.COBBLESTONE, "Cobble cobble", "Obtain 32 Cobblestone", generateMap(Pair.of(Material.COBBLESTONE, 32)));
-		addInInventoryAdvancement(-1, "ironchestplate", Material.IRON_CHESTPLATE, "Suit up!", "Obtain 1 Iron Chestplate", generateMap(Pair.of(Material.POTION, 1)));
+		addInInventoryAdvancement(-1, "ironchestplate", Material.IRON_CHESTPLATE, "Suit up!", "Obtain 1 Iron Chestplate", generateMap(Pair.of(Material.IRON_CHESTPLATE, 1)));
 		addInInventoryAdvancement(-1, "dirt", Material.DIRT, "Just dirt", "Obtain 32 Dirt", generateMap(Pair.of(Material.DIRT, 32)));
 		addInInventoryAdvancement(-1, "stonetools", Material.STONE_HOE, "..and that includes the Hoe", "Obtain every Stone tool", generateMap(Pair.of(Material.STONE_SWORD, 1),Pair.of(Material.STONE_PICKAXE, 1),Pair.of(Material.STONE_AXE, 1),Pair.of(Material.STONE_PICKAXE, 1),Pair.of(Material.STONE_HOE, 1)));
 		addInInventoryAdvancement(-1, "coal", Material.COAL, "Free coal", "Obtain 10 Coal", generateMap(Pair.of(Material.COAL, 10)));

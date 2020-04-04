@@ -10,7 +10,8 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Animals;
+import org.bukkit.block.Block;
+import org.bukkit.block.BrewingStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -26,7 +27,7 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
@@ -64,27 +65,26 @@ public class EventManager implements Listener
 		this.itemBrewed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_BREWED));
 		this.hasDied = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_DIED));
 		this.isSomewhere = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_SOMEWHERE));
-		this.isRiding = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_SOMEWHERE));
+		this.isRiding = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.IS_RIDING));
 		this.itemUsed = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_USED));
 		this.hasBred = new ArrayList<AdvancementHolder>(manager.getHolders(EventType.HAS_BRED));
 	}
 	
 	@EventHandler
-	public void onEntityMountEvent(VehicleMoveEvent event)
+	public void onEntityMountEvent(VehicleEnterEvent event)
 	{
+		
 		for (AdvancementHolder ah : this.isRiding)
 		{
 			try {
 				EntityType entityType = ((AdvancementHolderRide)ah).getEntityType();
-				if (((Entity)event.getVehicle()).getType() == entityType)
+				if ((event.getVehicle()).getType() == entityType)
 				{
-					for (Entity e : event.getVehicle().getPassengers())
-					{
-						if (e instanceof Player)
+					
+						if (event.getEntered() instanceof Player)
 						{
-							check((Player)e, ah.getKey());
+							check((Player)event.getEntered(), ah.getKey());
 						}
-					}
 				}
 			}
 			catch (Exception e)
@@ -122,24 +122,39 @@ public class EventManager implements Listener
 		{
 			try {
 				PotionType potionType = ((AdvancementHolderBrew)ah).getPotionType();
-				ItemStack[] itemStackArrayBrewingStand = event.getContents().getStorageContents();
-				for (ItemStack is : itemStackArrayBrewingStand)
+				
+						
+				ItemStack[] is = event.getContents().getStorageContents();
+
+				for (int i = 0; i < is.length; i++)
 				{
-					if (is.getItemMeta() instanceof PotionMeta)
+					try
 					{
-						PotionMeta meta = (PotionMeta)is.getItemMeta();
-						if (meta.getBasePotionData().getType() == potionType)
+						if (is[i].getType() == Material.POTION)
 						{
-							Iterator<Entity> it = event.getBlock().getWorld().getNearbyEntities(event.getBlock().getBoundingBox().expand(7)).iterator();
-							while (it.hasNext())
+							Bukkit.getLogger().log(Level.INFO, "it is here now");
+							PotionMeta meta = (PotionMeta)is[i].getItemMeta();
+							Bukkit.getLogger().log(Level.INFO, meta.getBasePotionData().getType().toString());
+							if (meta.getBasePotionData().getType() == potionType)
 							{
-								Entity entity = it.next();
-								if (entity instanceof Player)
+								Bukkit.getLogger().log(Level.INFO, "oeh it penetrated deeper");
+								Iterator<Entity> it = event.getBlock().getWorld().getNearbyEntities(event.getBlock().getBoundingBox().expand(7)).iterator();
+								while (it.hasNext())
 								{
-									check((Player)entity, ah.getKey());
+									Bukkit.getLogger().log(Level.INFO, "well this is next level sheit");
+									Entity entity = it.next();
+									if (entity instanceof Player)
+									{
+										check((Player)entity, ah.getKey());
+									}
 								}
 							}
 						}
+					}
+					catch(Exception e)
+					{
+						Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
+						e.printStackTrace();
 					}
 				}
 				
