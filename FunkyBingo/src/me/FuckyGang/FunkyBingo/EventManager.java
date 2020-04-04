@@ -121,40 +121,36 @@ public class EventManager implements Listener
 		for (AdvancementHolder ah : this.itemBrewed)
 		{
 			try {
-				PotionType potionType = ((AdvancementHolderBrew)ah).getPotionType();
-				
+				PotionType input = ((AdvancementHolderBrew)ah).getInput();
+				Material ingredient = ((AdvancementHolderBrew)ah).getIngredient();
 						
 				ItemStack[] is = event.getContents().getStorageContents();
+				if (ingredient != event.getContents().getIngredient().getType())
+				{
+					return;
+				}
 
 				for (int i = 0; i < is.length; i++)
 				{
-					try
+					if (is[i] == null)
 					{
-						if (is[i].getType() == Material.POTION)
+						continue;
+					}
+					if (is[i].getType() == Material.POTION)
+					{
+						PotionMeta meta = (PotionMeta)is[i].getItemMeta();
+						if (meta.getBasePotionData().getType() == input)
 						{
-							Bukkit.getLogger().log(Level.INFO, "it is here now");
-							PotionMeta meta = (PotionMeta)is[i].getItemMeta();
-							Bukkit.getLogger().log(Level.INFO, meta.getBasePotionData().getType().toString());
-							if (meta.getBasePotionData().getType() == potionType)
+							Iterator<Entity> it = event.getBlock().getWorld().getNearbyEntities(event.getBlock().getBoundingBox().expand(7)).iterator();
+							while (it.hasNext())
 							{
-								Bukkit.getLogger().log(Level.INFO, "oeh it penetrated deeper");
-								Iterator<Entity> it = event.getBlock().getWorld().getNearbyEntities(event.getBlock().getBoundingBox().expand(7)).iterator();
-								while (it.hasNext())
+								Entity entity = it.next();
+								if (entity instanceof Player)
 								{
-									Bukkit.getLogger().log(Level.INFO, "well this is next level sheit");
-									Entity entity = it.next();
-									if (entity instanceof Player)
-									{
-										check((Player)entity, ah.getKey());
-									}
+									check((Player)entity, ah.getKey());
 								}
 							}
 						}
-					}
-					catch(Exception e)
-					{
-						Bukkit.getLogger().log(Level.SEVERE, e.getMessage() + " " + ah.getKey() + " " + "something went wrong here");
-						e.printStackTrace();
 					}
 				}
 				

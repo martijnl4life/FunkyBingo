@@ -5,16 +5,22 @@ import org.bukkit.potion.PotionType;
 
 public class AdvancementHolderBrew extends AdvancementHolder {
 
-	private PotionType potionType;
+	private PotionType input;
+	private Material ingredient;
 	
-	protected AdvancementHolderBrew(int difficulty, String key, Material icon, String title, String description,
-			 PotionType potionType) {
+	protected AdvancementHolderBrew(int difficulty, String key, Material icon, String title, String description, PotionType input, Material ingredient) {
 		super(difficulty, key, icon, title, description, 1, EventType.HAS_BREWED);
-		this.potionType = potionType;
+		this.input = input;
+		this.ingredient = ingredient;
 	}
 
-	public PotionType getPotionType() 
+	public PotionType getInput() 
 	{
-		return potionType;
+		return input;
+	}
+	
+	public Material getIngredient() 
+	{
+		return ingredient;
 	}
 }

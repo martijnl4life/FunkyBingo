@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionType;
@@ -233,9 +232,9 @@ public class Manager implements ManagerInterface
 		holders.add(new AdvancementHolderBreed(difficulty, key, icon, title, description, entityType));
 	}
 	
-	private void addBrewsPotionAdvancement(int difficulty, String key, Material icon, String title, String description, PotionType potionType)
+	private void addBrewsPotionAdvancement(int difficulty, String key, Material icon, String title, String description, PotionType potionType, Material ingredient)
 	{
-		holders.add(new AdvancementHolderBrew(difficulty, key, icon, title, description, potionType));
+		holders.add(new AdvancementHolderBrew(difficulty, key, icon, title, description, potionType, ingredient));
 	}
 	
 	private void initAdvancements()
@@ -312,7 +311,7 @@ public class Manager implements ManagerInterface
 		
 		addEntityBreedAdvancement(-1,"cows", Material.COW_SPAWN_EGG, "MOOOOOO", "Breed a cow", EntityType.COW);
 		addEntityMountAdvancement(-1, "piggy", Material.CARROT_ON_A_STICK, "ideal transport", "Ride a Pig", EntityType.PIG);
-		addBrewsPotionAdvancement(-1, "awkward", Material.SPLASH_POTION, "awkward encounter", "brew an awkward potion", PotionType.AWKWARD);
+		addBrewsPotionAdvancement(-1, "awkward", Material.SPLASH_POTION, "awkward encounter", "brew an awkward potion", PotionType.WATER, Material.NETHER_WART);
 		//68 
 	}
 }
