@@ -278,7 +278,7 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(-1, "slimeball", Material.SLIME_BALL, "Slimey!", "Obtain 1 Slime Ball", generateMap(Pair.of(Material.SLIME_BALL, 1)));
 		addInInventoryAdvancement(-1, "nautilusshell", Material.NAUTILUS_SHELL, "From his cold, wet hands", "Obtain 1 Nautilus Shell", generateMap(Pair.of(Material.NAUTILUS_SHELL, 1)));
 		addInInventoryAdvancement(-1, "seaheart", Material.HEART_OF_THE_SEA, "Treasure!", "Obtain 1 Heart of the Sea", generateMap(Pair.of(Material.HEART_OF_THE_SEA, 1)));
-		addInInventoryAdvancement(-1, "allfish", Material.PUFFERFISH, "Fishing time", "Obtain all fish (Cod, Salmon, Pufferfish)", generateMap(Pair.of(Material.PUFFERFISH, 1)));
+		addInInventoryAdvancement(-1, "allfish", Material.PUFFERFISH, "Fishing time", "Obtain all fish (Cod, Salmon, Pufferfish, Tropical Fish)", generateMap(Pair.of(Material.PUFFERFISH, 1), Pair.of(Material.COD, 1), Pair.of(Material.TROPICAL_FISH, 1), Pair.of(Material.SALMON, 1)));
 		addInInventoryAdvancement(-1, "map", Material.FILLED_MAP, "Mapped out", "Obtain 1 map", generateMap(Pair.of(Material.FILLED_MAP, 1)));
 		addInInventoryAdvancement(-1, "rabbitfoot", Material.RABBIT_FOOT, "Lucky you", "Obtain a Rabbit's Foot", generateMap(Pair.of(Material.RABBIT_FOOT, 1)));
 		addInInventoryAdvancement(-1, "dragonbreath", Material.DRAGON_BREATH, "Smelly breath in a bottle", "Obtain 1 Bottle of Dragon's Breath", generateMap(Pair.of(Material.DRAGON_BREATH, 1)));
@@ -305,10 +305,11 @@ public class Manager implements ManagerInterface
 		addhasConsumedAdvancement(-1, "goldenparty", Material.GOLDEN_APPLE, "tastes better plated in gold", "eat a golden apple", Material.GOLDEN_APPLE);
 		addhasConsumedAdvancement(-1, "rabbitstew", Material.RABBIT_STEW, "Overcomplicated Eating", "Eat a RabbitStew", Material.CLOCK);
 		addhasConsumedAdvancement(-1, "milk", Material.MILK_BUCKET, "Milky time!", "Drink a bucket of Milk", Material.MILK_BUCKET);
+		
+		addKillsEntityAdvancement(-1, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
+		addKillsEntityAdvancement(-1, "trader", Material.WANDERING_TRADER_SPAWN_EGG, "Betray the trader", "Kill a Wandering trader", EntityType.WANDERING_TRADER);
 
 		addPlacedBlockAdvancement(-1, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale at 0 255 0", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
-		addKillsEntityAdvancement(-1, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
-		
 		addEntityBreedAdvancement(-1,"cows", Material.COW_SPAWN_EGG, "MOOOOOO", "Breed a cow", EntityType.COW);
 		addEntityMountAdvancement(-1, "piggy", Material.CARROT_ON_A_STICK, "ideal transport", "Ride a Pig", EntityType.PIG);
 		addBrewsPotionAdvancement(-1, "awkward", Material.SPLASH_POTION, "awkward encounter", "brew an awkward potion", PotionType.WATER, Material.NETHER_WART);
