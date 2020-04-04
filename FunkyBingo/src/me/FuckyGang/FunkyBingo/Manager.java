@@ -84,12 +84,12 @@ public class Manager implements ManagerInterface
 				}
 				else
 				{
-					ahaDifficulties.get(y * size + x).makeAdvancement(id, holders.get(y * size + x - 1).getAdvancement(id), x, y);
+					ahaDifficulties.get(y * size + x).makeAdvancement(id, ahaDifficulties.get(y * size + x - 1).getAdvancement(id), x, y);
 				}
 			}
 			
 		}
-		for (AdvancementHolder holder : holders)
+		for (AdvancementHolder holder : ahaDifficulties)
 		{
 			if (isAdvancementInNamespace(holder, id))
 			{
@@ -228,9 +228,9 @@ public class Manager implements ManagerInterface
 		holders.add(new AdvancementHolderRide(difficulty, key, icon, title, description, entityType));
 	}
 	
-	private void addEntityBreedAdvancement(int difficulty, String key, Material icon, String title, String description, Animals animals)
+	private void addEntityBreedAdvancement(int difficulty, String key, Material icon, String title, String description, EntityType entityType)
 	{
-		holders.add(new AdvancementHolderBreed(difficulty, key, icon, title, description, animals));
+		holders.add(new AdvancementHolderBreed(difficulty, key, icon, title, description, entityType));
 	}
 	
 	private void addBrewsPotionAdvancement(int difficulty, String key, Material icon, String title, String description, PotionType potionType)
@@ -255,7 +255,7 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(-1, "undyingtotem", Material.TOTEM_OF_UNDYING, "Shiny totem", "Obtain 1 Totem of Undying", generateMap(Pair.of(Material.TOTEM_OF_UNDYING, 1)));
 		addInInventoryAdvancement(-1, "witherskull", Material.WITHER_SKELETON_SKULL, "RNGesus", "Obtain 1 Wither Skeleton Skull", generateMap(Pair.of(Material.WITHER_SKELETON_SKULL, 1)));
 		addInInventoryAdvancement(-1, "cobblestone", Material.COBBLESTONE, "Cobble cobble", "Obtain 32 Cobblestone", generateMap(Pair.of(Material.COBBLESTONE, 32)));
-		addInInventoryAdvancement(-1, "ironchestplate", Material.POTION, "Suit up!", "Obtain 1 Iron Chestplate", generateMap(Pair.of(Material.POTION, 1)));
+		addInInventoryAdvancement(-1, "ironchestplate", Material.IRON_CHESTPLATE, "Suit up!", "Obtain 1 Iron Chestplate", generateMap(Pair.of(Material.POTION, 1)));
 		addInInventoryAdvancement(-1, "dirt", Material.DIRT, "Just dirt", "Obtain 32 Dirt", generateMap(Pair.of(Material.DIRT, 32)));
 		addInInventoryAdvancement(-1, "stonetools", Material.STONE_HOE, "..and that includes the Hoe", "Obtain every Stone tool", generateMap(Pair.of(Material.STONE_SWORD, 1),Pair.of(Material.STONE_PICKAXE, 1),Pair.of(Material.STONE_AXE, 1),Pair.of(Material.STONE_PICKAXE, 1),Pair.of(Material.STONE_HOE, 1)));
 		addInInventoryAdvancement(-1, "coal", Material.COAL, "Free coal", "Obtain 10 Coal", generateMap(Pair.of(Material.COAL, 10)));
@@ -268,7 +268,7 @@ public class Manager implements ManagerInterface
 		addInInventoryAdvancement(-1, "emerald", Material.EMERALD, "Usefull for trading", "Obtain 1 Emerald", generateMap(Pair.of(Material.EMERALD, 1)));
 		addInInventoryAdvancement(-1, "torch", Material.TORCH, "Light it up", "Obtain 64 Torches", generateMap(Pair.of(Material.TORCH, 64)));
 		addInInventoryAdvancement(-1, "diamondhoe", Material.DIAMOND_HOE, "Arguably the best Tool", "Obtain 1 Diamond Hoe", generateMap(Pair.of(Material.DIAMOND_HOE, 1)));
-		addInInventoryAdvancement(-1, "shield", Material.POTION, "Better than armor TBH", "Obtain 1 Shield", generateMap(Pair.of(Material.SHIELD, 1)));
+		addInInventoryAdvancement(-1, "shield", Material.SHIELD, "Better than armor TBH", "Obtain 1 Shield", generateMap(Pair.of(Material.SHIELD, 1)));
 		addInInventoryAdvancement(-1, "allium", Material.ALLIUM, "Pick and choose", "Obtain 1 Allium Flower", generateMap(Pair.of(Material.ALLIUM, 1)));
 		addInInventoryAdvancement(-1, "lilyofthevalley", Material.LILY_OF_THE_VALLEY, "Pick and choose", "Obtain 1 Allium", generateMap(Pair.of(Material.LILY_OF_THE_VALLEY, 1)));
 		addInInventoryAdvancement(-1, "blueorchid", Material.BLUE_ORCHID, "Pick and choose", "Obtain 1 Blue Orchid", generateMap(Pair.of(Material.BLUE_ORCHID, 1)));
@@ -309,6 +309,10 @@ public class Manager implements ManagerInterface
 
 		addPlacedBlockAdvancement(-1, "haybale", Material.HAY_BLOCK, "Hay, what's up?", "Place a haybale at 0 255 0", Pair.of(Material.HAY_BLOCK, new Location(null, 0, 255, 0)));
 		addKillsEntityAdvancement(-1, "enderman", Material.ENDERMAN_SPAWN_EGG, "The Ender Ender!", "Kill an Enderman", EntityType.ENDERMAN);
-		//65 
+		
+		addEntityBreedAdvancement(-1,"cows", Material.COW_SPAWN_EGG, "MOOOOOO", "Breed a cow", EntityType.COW);
+		addEntityMountAdvancement(-1, "piggy", Material.CARROT_ON_A_STICK, "ideal transport", "Ride a Pig", EntityType.PIG);
+		addBrewsPotionAdvancement(-1, "awkward", Material.SPLASH_POTION, "awkward encounter", "brew an awkward potion", PotionType.AWKWARD);
+		//68 
 	}
 }

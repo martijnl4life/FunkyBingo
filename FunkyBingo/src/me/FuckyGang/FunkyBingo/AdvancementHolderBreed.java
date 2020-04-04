@@ -1,22 +1,22 @@
 package me.FuckyGang.FunkyBingo;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Animals;
+import org.bukkit.entity.EntityType;
 
 public class AdvancementHolderBreed extends AdvancementHolder {
 
-	private Animals animal;
+	private EntityType entityType;
 	
 	protected AdvancementHolderBreed(int difficulty, String key, Material icon, String title, String description,
-			Animals animal) {
+			EntityType entityType) {
 		super(difficulty, key, icon, title, description, 1, EventType.HAS_BRED);
-		this.animal = animal;
+		this.entityType = entityType;
 		
 	}
 
-	public Animals getAnimals()
+	public EntityType getType()
 	{
-		return animal;
+		return entityType;
 	}
 	
 }

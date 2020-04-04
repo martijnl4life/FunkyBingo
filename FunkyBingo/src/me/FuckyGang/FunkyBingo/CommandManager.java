@@ -39,7 +39,7 @@ public class CommandManager
 								{
 									int diff = Integer.parseInt(args[3]);
 									int size = Integer.parseInt(args[4]);
-									if (diff >= 0 && diff <= 2 && size >= 0 && size <= 5)
+									if (diff >= 0 && diff <= 2 && size >= 0)
 									{
 										manager.createCard(args[2], diff, size);
 										sender.sendMessage(ChatColor.GREEN + "Successfully created card '" + args[2] + "'!");

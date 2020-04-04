@@ -101,8 +101,8 @@ public class EventManager implements Listener
 		for (AdvancementHolder ah : this.hasBred)
 		{
 			try {
-				Animals animal = ((AdvancementHolderBreed)ah).getAnimals();
-				if (animal == (Animals)event.getEntity())
+				EntityType entity = ((AdvancementHolderBreed)ah).getType();
+				if (entity == event.getEntity().getType())
 				{
 					check((Player)event.getBreeder(), ah.getKey());
 				}
